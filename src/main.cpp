@@ -155,9 +155,33 @@ struct string_alg
 template <template <typename> class C>
 struct fix
 {
-  explicit fix(C<fix<C>> &&_val) : val_{std::move(_val)} {}
+  using rec = C<fix<C>>;
+  explicit fix(rec &&_val) : val_{std::move(_val)} {}
 
-  fcppt::recursive<C<fix<C>>> val_;
+  fcppt::recursive<rec> val_;
+};
+
+template <typename Ch>
+struct forest_alg_f
+{
+  template <typename R, typename Rx>
+  using type = fcppt::variant::object<fcppt::unit, std::tuple<R, R>, std::tuple<Ch, R>, std::tuple<Rx, R>>;
+};
+
+template <typename Ch>
+struct forest_alg_fx
+{
+  template <typename R, typename Rx>
+  using type = fcppt::variant::object<std::tuple<Ch, R, R>, std::tuple<Rx, Rx>>;
+};
+
+template <template <typename, typename> class C1, template <typename, typename> class C2>
+struct fix2
+{
+  using rec = C1<fix2<C2, C1>, fix2<C1, C2>>;
+  explicit fix2(rec &&_val) : val_{std::move(_val)} {}
+
+  fcppt::recursive<rec> val_;
 };
 
 int main()

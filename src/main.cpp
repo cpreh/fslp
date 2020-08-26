@@ -1,7 +1,10 @@
+#include <fcppt/copy.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/nonmovable.hpp>
+#include <fcppt/recursive.hpp>
 #include <fcppt/unique_ptr.hpp>
 #include <fcppt/unique_ptr_to_base.hpp>
+#include <fcppt/unit.hpp>
 #include <fcppt/container/make.hpp>
 #include <fcppt/optional/make.hpp>
 #include <fcppt/optional/make_if.hpp>
@@ -22,10 +25,10 @@ class nonempty
 public:
   explicit nonempty(T &&_v) : c_{fcppt::container::make<std::vector<T>>(std::move(_v))} {}
 
-  T const &back() const { return this->c_.back(); }
-  T &back() { return this->c_.back(); }
+  [[nodiscard]] T const &back() const { return this->c_.back(); }
+  [[nodiscard]] T &back() { return this->c_.back(); }
 
-  fcppt::optional::object<nonempty> pop_back() &&
+  [[nodiscard]] fcppt::optional::object<nonempty> pop_back() &&
   {
     return fcppt::optional::make_if(!this->c_.empty(), [this] {
       this->c_.pop_back();
@@ -38,7 +41,7 @@ private:
 };
 
 template <typename T>
-nonempty<fcppt::type_traits::remove_cv_ref_t<T>> make_nonempty(T &&_value)
+[[nodiscard]] nonempty<fcppt::type_traits::remove_cv_ref_t<T>> make_nonempty(T &&_value)
 {
   return nonempty<fcppt::type_traits::remove_cv_ref_t<T>>{std::forward<T>(_value)};
 }
@@ -82,19 +85,25 @@ public:
     });
   }
 
-  [[nodiscard]] fcppt::optional::object<fcppt::unique_ptr<string_nav<Ch>>> prev() && override {}
-
+  [[nodiscard]] fcppt::optional::object<fcppt::unique_ptr<string_nav<Ch>>> prev() && override
+  {
+    return fcppt::optional::make_if(this->pos_ > 0U, [this] {
+      return fcppt::unique_ptr_to_base<string_nav<Ch>>(
+          fcppt::make_unique_ptr<simple_string_nav>(std::move(this->impl_), this->pos_ - 1U));
+    });
+  }
 private:
   std::vector<Ch> impl_;
   pos_type pos_;
 };
 
 template <typename Ch>
-fcppt::optional::object<fcppt::unique_ptr<string_nav<Ch>>> string_nav_first(std::vector<Ch> &&_string)
+[[nodiscard]] fcppt::optional::object<fcppt::unique_ptr<string_nav<Ch>>>
+string_nav_first(std::vector<Ch> &&_string)
 {
   return fcppt::optional::make_if(!_string.empty(), [&_string] {
     return fcppt::unique_ptr_to_base<string_nav<Ch>>(
-	  fcppt::make_unique_ptr<simple_string_nav<Ch>>(std::move(_string),0U));
+        fcppt::make_unique_ptr<simple_string_nav<Ch>>(std::move(_string), 0U));
   });
 }
 
@@ -105,7 +114,7 @@ template <typename Ch, typename N>
 using vert_nav = nonempty<fcppt::unique_ptr<string_nav<spine_alph<Ch, N>>>>;
 
 template <typename Ch, typename N>
-fcppt::optional::object<vert_nav<Ch, N>> root(std::vector<spine_alph<Ch,N>> &&_spine)
+[[nodiscard]] fcppt::optional::object<vert_nav<Ch, N>> root(std::vector<spine_alph<Ch, N>> &&_spine)
 {
   return fcppt::optional::map(
       string_nav_first(std::move(_spine)),
@@ -115,7 +124,7 @@ fcppt::optional::object<vert_nav<Ch, N>> root(std::vector<spine_alph<Ch,N>> &&_s
 }
 
 template <typename Ch, typename N>
-fcppt::optional::object<vert_nav<Ch, N>> up(vert_nav<Ch, N> &&_nav)
+[[nodiscard]] fcppt::optional::object<vert_nav<Ch, N>> up(vert_nav<Ch, N> &&_nav)
 {
   return fcppt::optional::maybe(
       _nav.back()->prev(),
@@ -126,13 +135,39 @@ fcppt::optional::object<vert_nav<Ch, N>> up(vert_nav<Ch, N> &&_nav)
       });
 }
 
-int main()
-{
-  using Z = char;
+/*
   using N = char;
   using sa = spine_alph<Z, N>;
 
   std::vector<sa> spine{sa{std::make_tuple('a', 'L', 'R')}, sa{std::make_tuple('b', 'C')}};
 
   fcppt::optional::object<vert_nav<Z, N>> nav{root(std::move(spine))};
+*/
+
+
+template <typename Ch>
+struct string_alg
+{
+  template <typename R>
+  using type = fcppt::variant::object<fcppt::unit, Ch, std::tuple<R, R>>;
+};
+
+template <template <typename> class C>
+struct fix
+{
+  explicit fix(C<fix<C>> &&_val) : val_{std::move(_val)} {}
+
+  fcppt::recursive<C<fix<C>>> val_;
+};
+
+int main()
+{
+  using Z = char;
+  using string_alg_Z = string_alg<Z>;
+  using string_alg_fix = fix<string_alg_Z::type>;
+  using string_alg_fix_arg = string_alg_Z::type<string_alg_fix>;
+
+  string_alg_fix test{string_alg_fix_arg{fcppt::unit{}}};
+
+  string_alg_fix test2{string_alg_fix_arg{std::make_tuple(fcppt::copy(test),fcppt::copy(test))}};
 }

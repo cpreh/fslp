@@ -44,6 +44,7 @@ add_executable(
 
 target_link_libraries(
 	fslp
+	PRIVATE
 	fcppt_core_interface
 )
 

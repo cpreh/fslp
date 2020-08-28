@@ -6,6 +6,9 @@
 #include <fcppt/unique_ptr_to_base.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/container/make.hpp>
+#include <fcppt/metal/from_number.hpp>
+#include <fcppt/metal/interval.hpp>
+#include <fcppt/metal/to_number.hpp>
 #include <fcppt/optional/make.hpp>
 #include <fcppt/optional/make_if.hpp>
 #include <fcppt/optional/map.hpp>
@@ -14,6 +17,8 @@
 #include <fcppt/type_traits/remove_cv_ref_t.hpp>
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
+#include <metal.hpp>
+#include <cstddef>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -153,10 +158,10 @@ struct string_alg
 };
 
 template <template <typename> class C>
-struct fix
+struct fix1
 {
-  using rec = C<fix<C>>;
-  explicit fix(rec &&_val) : val_{std::move(_val)} {}
+  using rec = C<fix1<C>>;
+  explicit fix1(rec &&_val) : val_{std::move(_val)} {}
 
   fcppt::recursive<rec> val_;
 };
@@ -184,14 +189,66 @@ struct fix2
   fcppt::recursive<rec> val_;
 };
 
+template<typename L, typename Index>
+using splice = metal::splice<L, fcppt::metal::to_number<Index>, metal::list<>>;
+
+template<typename>
+struct apply_fix_impl;
+
+template <template <typename...> class... Cs>
+struct fix;
+
+template<template<typename...> class ...Ts>
+struct apply_fix_impl<
+  ::metal::list<
+    ::metal::lambda<
+      Ts
+    >...
+  >
+>
+{
+  using type = fix<Ts...>;
+};
+
+template<typename L>
+using apply_fix = typename apply_fix_impl<L>::type;
+
+template <template <typename...> class C1, template <typename...> class... Cs>
+struct make_fix
+{
+  using constructors = metal::list<metal::lambda<C1>, metal::lambda<Cs>...>;
+  using positions = fcppt::metal::interval<std::size_t, 0U, metal::size<constructors>::value>;
+  using rotations = metal::transform<
+      metal::bind<metal::lambda<splice>, metal::always<constructors>, metal::_1>,
+      positions>;
+  using arguments = metal::transform<metal::lambda<apply_fix>, rotations>;
+  using type = metal::apply<metal::lambda<C1>,arguments>;
+};
+
+template <template <typename...> class... Cs>
+struct fix
+{
+  using rec = typename make_fix<Cs...>::type;
+
+  explicit fix(rec &&_val) : val_{std::move(_val)} {}
+
+  fcppt::recursive<rec> val_;
+};
+
+
 int main()
 {
+  using fslp_fix = fix<forest_alg_f<char>::type,forest_alg_fx<char>::type>;
+  using fslp_fix_arg = fslp_fix::rec;
+  fslp_fix test{fslp_fix_arg{fcppt::unit{}}};
+//  test++;
+/*
   using Z = char;
   using string_alg_Z = string_alg<Z>;
-  using string_alg_fix = fix<string_alg_Z::type>;
+  using string_alg_fix = fix1<string_alg_Z::type>;
   using string_alg_fix_arg = string_alg_Z::type<string_alg_fix>;
 
   string_alg_fix test{string_alg_fix_arg{fcppt::unit{}}};
 
-  string_alg_fix test2{string_alg_fix_arg{std::make_tuple(fcppt::copy(test),fcppt::copy(test))}};
+  string_alg_fix test2{string_alg_fix_arg{std::make_tuple(fcppt::copy(test),fcppt::copy(test))}};*/
 }

@@ -32,6 +32,17 @@ include(
 	FcpptCMakeUtils
 )
 
+add_library(
+	fslp_interface
+	INTERFACE
+)
+
+target_include_directories(
+	fslp_interface
+	INTERFACE
+	include
+)
+
 set(
 	FSLP_FILES
 	src/main.cpp
@@ -46,6 +57,7 @@ target_link_libraries(
 	fslp
 	PRIVATE
 	fcppt_core_interface
+	fslp_interface
 )
 
 fcppt_utils_set_target_compiler_flags(

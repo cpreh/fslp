@@ -10,37 +10,28 @@
 #include <utility>
 #include <fcppt/config/external_end.hpp>
 
-
 namespace fslp
 {
-
 template <template <typename...> class... Cs>
 struct fix;
 
 namespace detail
 {
-
 template <typename L, typename Index>
 using rotate_at = metal::join<
     metal::drop<L, fcppt::metal::to_number<Index>>,
     metal::take<L, fcppt::metal::to_number<Index>>>;
 
-template<typename>
+template <typename>
 struct apply_fix_impl;
 
-template<template<typename...> class ...Ts>
-struct apply_fix_impl<
-  ::metal::list<
-    ::metal::lambda<
-      Ts
-    >...
-  >
->
+template <template <typename...> class... Ts>
+struct apply_fix_impl<::metal::list<::metal::lambda<Ts>...>>
 {
   using type = fix<Ts...>;
 };
 
-template<typename L>
+template <typename L>
 using apply_fix = typename apply_fix_impl<L>::type;
 
 template <template <typename...> class C1, template <typename...> class... Cs>
@@ -62,8 +53,10 @@ struct fix
 {
   using rec = typename detail::make_fix<Cs...>::type;
 
-  template<typename U>
-  fix(U &&_val) : val_{rec{std::forward<U>(_val)}} {}
+  template <typename U>
+  fix(U &&_val) : val_{rec{std::forward<U>(_val)}}
+  {
+  }
 
   fcppt::recursive<rec> val_;
 };

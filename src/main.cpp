@@ -82,19 +82,18 @@ struct fix
   using mkfix = make_fix<Cs...>;
   using rec = typename make_fix<Cs...>::type;
 
-  explicit fix(rec &&_val) : val_{std::move(_val)} {}
+  template<typename U>
+  fix(U &&_val) : val_{rec{std::forward<U>(_val)}} {}
 
   fcppt::recursive<rec> val_;
 };
 
 using fslp_fix = fix<forest_alg_f<char>::type,forest_alg_fx<char>::type>;
-using fslp_fix_arg = fslp_fix::rec;
 using fslp_fix_f = fix<forest_alg_fx<char>::type,forest_alg_f<char>::type>;
-using fslp_fix_f_arg = fslp_fix_f::rec;
 
 int main()
 {
-  fslp_fix e{fslp_fix_arg{fcppt::unit{}}};
-  fslp_fix_f f1{fslp_fix_f_arg{std::make_tuple('a', fcppt::copy(e), fcppt::copy(e))}};
-  //fslp_fix test2{fslp_fix_arg{std::make_tuple(fcppt::copy(f1), fcppt::copy(e))}};
+  fslp_fix e{fcppt::unit{}};
+  fslp_fix_f f1{std::make_tuple('a', fcppt::copy(e), fcppt::copy(e))};
+  fslp_fix test2{std::make_tuple(fcppt::copy(f1), fcppt::copy(e))};
 }

@@ -34,7 +34,7 @@ struct forest_alg_f
 template <typename Ch>
 struct forest_alg_fx
 {
-  template <typename R, typename Rx>
+  template <typename Rx, typename R>
   using type = fcppt::variant::object<std::tuple<Ch, R, R>, std::tuple<Rx, Rx>>;
 };
 

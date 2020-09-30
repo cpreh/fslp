@@ -4,13 +4,11 @@
 #include <fslp/fix.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <tuple>
+#include <vector>
 #include <fcppt/config/external_end.hpp>
 
-#include <fcppt/container/tuple/map.hpp>
-#include <fcppt/variant/apply.hpp>
-#include <fcppt/variant/object.hpp>
-#include <unordered_map>
-#include <tuple>
+#include <fcppt/container/join.hpp>
+#include <fcppt/variant/match.hpp>
 
 template <typename Ch>
 struct forest_alg_f
@@ -18,6 +16,9 @@ struct forest_alg_f
   template <typename R, typename Rx>
   using type = fcppt::variant::object<fcppt::unit, std::tuple<R,R>, std::tuple<Rx, R>, std::tuple<Ch, R>>;
 };
+
+template <typename Ch, typename R, typename Rx>
+using forest_alg_f_t = typename forest_alg_f<Ch>:: template type<R,Rx>;
 
 template <typename Ch>
 struct forest_alg_fx
@@ -29,67 +30,85 @@ struct forest_alg_fx
 using fslp_fix = fslp::fix<forest_alg_f<char>::type,forest_alg_fx<char>::type>;
 using fslp_fix_f = fslp::fix<forest_alg_fx<char>::type,forest_alg_f<char>::type>;
 
-template<typename N1, typename N2>
-struct slp2
+template <typename Ch>
+struct tree;
+
+template <typename Ch>
+struct forest;
+
+template <typename Ch>
+struct tree
 {
-  template<template<typename,typename> class C1, template<typename,typename> class C2>
-  using type = std::tuple<std::unordered_map<N1,C1<N1,N2>>, std::unordered_map<N2,C2<N1,N2>>>;
+  using type = std::tuple<Ch, forest<Ch>>;
 };
 
-template<
-    typename N1,
-    typename N2,
-    template <typename, typename>
-    class C1,
-    template <typename, typename>
-    class C2,
-    typename... Ts
->
-auto unfold(
-  typename slp2<N1, N2>::template type<C1, C2> const &_slp,
-  std::tuple<Ts...> const &_arg)
-{
-  return fcppt::container::tuple::map(_arg,[&_slp](auto const &_inner) { return unfold(_slp,_inner); });
-}
+template<typename Ch>
+using tree_t = typename tree<Ch>::type;
 
-template<
-    typename N1,
-    typename N2,
-    template <typename, typename>
-    class C1,
-    template <typename, typename>
-    class C2,
-    typename... Ts
->
-auto unfold(
-  typename slp2<N1, N2>::template type<C1, C2> const &_slp,
-  fcppt::variant::object<Ts...> const &_arg)
+template <typename Ch>
+struct forest
 {
-  return fcppt::variant::apply(_arg,[&_slp](auto const &_inner) { return unfold(_slp,_inner); });
-}
-
-template <
-    typename N1,
-    typename N2,
-    template <typename, typename>
-    class C1,
-    template <typename, typename>
-    class C2>
-auto unfold(
-    fslp::fix<C1, C2> const &_expr, typename slp2<N1, N2>::template type<C1, C2> const &_slp)
-{
-}
-
-enum class N
-{
-  A,
-  B
+  using type = std::vector<tree<Ch>>;
 };
 
-enum class NX
+template <typename Ch>
+using forest_t = typename forest<Ch>::type;
+
+template <typename Ch>
+struct tree_x;
+
+template <typename Ch>
+struct forest_x;
+
+template <typename Ch>
+struct tree_x
 {
-  C,
-  D
+  using type = std::tuple<Ch, forest_x<Ch>>;
+};
+
+struct var {};
+
+template <typename Ch>
+struct forest_x
+{
+  using type = fcppt::variant::
+      object<var, std::tuple<forest<Ch>, forest_x<Ch>>, std::tuple<forest_x<Ch>, forest<Ch>>>;
+};
+
+template <typename Ch>
+using forest_x_t = typename forest_x<Ch>::type;
+
+template<typename Ch>
+forest_t<Ch> apply(forest_x_t<Ch> const &x, forest_t<Ch> const &f)
+{
+  return fcppt::variant::match(x,
+    [&f](var) { return f; },
+    [&f](std::tuple<forest<Ch>, forest_x<Ch>> const &r) {
+      return fcppt::container::join(std::get<0>(r),apply(std::get<1>(r),f));
+    },
+    [&f](std::tuple<forest_x<Ch>, forest<Ch>> const &r) {
+      return fcppt::container::join(apply(std::get<0>(r),f),std::get<1>(r));
+    });
+}
+
+template <typename Ch>
+struct forest_alg_def
+{
+  auto eval(forest_alg_f_t<Ch, forest_t<Ch>, forest_x_t<Ch>> const &exp)
+  {
+    return fcppt::variant::match(
+        exp,
+        [](fcppt::unit) { return forest_t<Ch>{}; },
+        [](std::tuple<forest_t<Ch>, forest_t<Ch>> const &r) {
+          return fcppt::container::join(std::get<0>(r), std::get<1>(r));
+        },
+        [](std::tuple<forest_x_t<Ch>, forest_t<Ch>> const &r) {
+          return apply(std::get<0>(r), std::get<1>(r));
+        },
+        [](std::tuple<Ch, forest_t<Ch>> const &r) {
+          return forest_t<Ch>{tree_t<Ch>{std::get<0>(r)}};
+        });
+  }
 };
 
 int main()
@@ -97,10 +116,5 @@ int main()
   fslp_fix e{fcppt::unit{}};
   fslp_fix_f f1{std::make_tuple('a', fcppt::copy(e), fcppt::copy(e))};
   fslp_fix test2{std::make_tuple(fcppt::copy(f1), fcppt::copy(e))};
-
-  using rhs_0_map = std::unordered_map<N,forest_alg_f<char>::type<N,NX>>;
-  rhs_0_map rhs_0{rhs_0_map::value_type{N::A, forest_alg_f<char>::type<N,NX>{fcppt::unit{}}}};
-
-  slp2<N,NX>::type<forest_alg_f<char>::type,forest_alg_fx<char>::type> slp{rhs_0,{}};
 
 }

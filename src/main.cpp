@@ -1,16 +1,13 @@
+#include <fslp/forest_alg_fix.hpp>
+#include <fslp/forest_alg_x_fix.hpp>
 #include <fcppt/copy.hpp>
 #include <fcppt/unit.hpp>
-#include <fcppt/variant/object.hpp>
-#include <fslp/fix.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <tuple>
-#include <vector>
 #include <fcppt/config/external_end.hpp>
 
 
-using fslp_fix = fslp::fix<fslp::forest_alg_t<char>,forest_alg_x<char>::type>;
-using fslp_fix_f = fslp::fix<forest_alg_x<char>::type,fslp::forest_alg_t<char>>;
-
+#if 0
 template <typename Ch>
 struct forest_alg_def
 {
@@ -30,11 +27,12 @@ struct forest_alg_def
         });
   }
 };
+#endif
 
 int main()
 {
-  fslp_fix e{fcppt::unit{}};
-  fslp_fix_f f1{std::make_tuple('a', fcppt::copy(e), fcppt::copy(e))};
-  fslp_fix test2{std::make_tuple(fcppt::copy(f1), fcppt::copy(e))};
+  fslp::forest_alg_fix<char> e{fcppt::unit{}};
+//  fslp::forest_alg_x_fix<char> f1{std::make_tuple('a', fcppt::copy(e), fcppt::copy(e))};
+//  fslp::forest_alg_fix<char> test2{std::make_tuple(fcppt::copy(f1), fcppt::copy(e))};
 
 }

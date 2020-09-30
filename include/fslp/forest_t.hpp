@@ -6,8 +6,8 @@
 namespace fslp
 {
 
-template <typename Ch>
-using forest_t = typename fslp::forest<Ch>::type;
+template <typename Ch, typename F, typename T>
+using forest_t = typename fslp::forest<Ch>:: template type<F,T>;
 
 }
 

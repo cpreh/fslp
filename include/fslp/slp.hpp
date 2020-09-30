@@ -1,8 +1,14 @@
+#ifndef FSLP_SLP_HPP_INCLUDED
+#define FSLP_SLP_HPP_INCLUDED
+
 #include <fcppt/container/tuple/map.hpp>
 #include <fcppt/variant/apply.hpp>
 #include <fcppt/variant/object.hpp>
 #include <unordered_map>
 #include <tuple>
+
+namespace fslp
+{
 
 template<typename... Ns>
 struct slp
@@ -10,6 +16,8 @@ struct slp
   template<template<typename...> class... Cs>
   using type = std::tuple<std::unordered_map<Ns,Cs<Ns...>>...>;
 };
+
+}
 
 #if 0
 template <typename F>

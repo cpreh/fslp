@@ -15,14 +15,15 @@ namespace fslp
 template<typename Ch>
 fslp::forest_t<Ch> apply(fslp::forest_x_t<Ch> const &x, fslp::forest_t<Ch> const &f)
 {
-  return fcppt::variant::match(x,
-    [&f](var) { return f; },
-    [&f](std::tuple<fslp::forest<Ch>, fslp::forest_x<Ch>> const &r) {
-      return fcppt::container::join(std::get<0>(r),fslp::apply(std::get<1>(r),f));
-    },
-    [&f](std::tuple<fslp::forest_x<Ch>, fslp::forest<Ch>> const &r) {
-      return fcppt::container::join(fslp::apply(std::get<0>(r),f),std::get<1>(r));
-    });
+  return fcppt::variant::match(
+      x,
+      [&f](var) { return f; },
+      [&f](std::tuple<fslp::forest_t<Ch>, fslp::forest_x_t<Ch>> const &r) {
+        return fcppt::container::join(std::get<0>(r), fslp::apply<Ch>(std::get<1>(r), f));
+      },
+      [&f](std::tuple<fslp::forest_x_t<Ch>, fslp::forest_t<Ch>> const &r) {
+        return fcppt::container::join(fslp::apply<Ch>(std::get<0>(r), f), std::get<1>(r));
+      });
 }
 
 }

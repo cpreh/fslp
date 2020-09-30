@@ -16,8 +16,8 @@ struct forest_x
 {
   using type = fcppt::variant::object<
       fslp::var,
-      std::tuple<fslp::forest<Ch>, fslp::forest_x<Ch>>,
-      std::tuple<fslp::forest_x<Ch>, fslp::forest<Ch>>>;
+      std::tuple<typename fslp::forest<Ch>::type, typename fslp::forest_x<Ch>::type>,
+      std::tuple<typename fslp::forest_x<Ch>::type, typename fslp::forest<Ch>::type>>;
 };
 
 }

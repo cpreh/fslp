@@ -32,13 +32,12 @@ set(
 	include/fslp/forest_fix.hpp
 	include/fslp/forest_t.hpp
 	include/fslp/forest_x.hpp
-	include/fslp/forest_x_fwd.hpp
 	include/fslp/forest_x_t.hpp
 	include/fslp/slp.hpp
 	include/fslp/tree.hpp
+	include/fslp/tree_fix.hpp
 	include/fslp/tree_t.hpp
 	include/fslp/tree_x.hpp
-	include/fslp/tree_x_fwd.hpp
 	include/fslp/var.hpp
 	src/main.cpp
 	src/nav.cpp

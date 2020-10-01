@@ -1,5 +1,5 @@
-#ifndef FSLP_TREE_FIX_HPP_INCLUDED
-#define FSLP_TREE_FIX_HPP_INCLUDED
+#ifndef FSLP_TREE_X_FIX_HPP_INCLUDED
+#define FSLP_TREE_X_FIX_HPP_INCLUDED
 
 #include <fslp/fix.hpp>
 #include <fslp/forest_x.hpp>

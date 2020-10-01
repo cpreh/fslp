@@ -1,6 +1,7 @@
 #ifndef FSLP_DETAIL_MAKE_FIX_HPP_INCLUDED
 #define FSLP_DETAIL_MAKE_FIX_HPP_INCLUDED
 
+#include <fslp/fix_fwd.hpp>
 #include <fcppt/metal/interval.hpp>
 #include <fcppt/metal/to_number.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -10,9 +11,6 @@
 
 namespace fslp
 {
-template <template <typename...> class... Cs>
-struct fix;
-
 namespace detail
 {
 template <typename L, typename Index>

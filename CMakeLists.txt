@@ -22,6 +22,7 @@ set(
 	include/fslp/apply.hpp
 	include/fslp/detail/make_fix.hpp
 	include/fslp/fix.hpp
+	include/fslp/fix_fwd.hpp
 	include/fslp/forest.hpp
 	include/fslp/forest_alg.hpp
 	include/fslp/forest_alg_fix.hpp
@@ -32,12 +33,15 @@ set(
 	include/fslp/forest_fix.hpp
 	include/fslp/forest_t.hpp
 	include/fslp/forest_x.hpp
+	include/fslp/forest_x_fix.hpp
 	include/fslp/forest_x_t.hpp
+	include/fslp/is_fix.hpp
 	include/fslp/slp.hpp
 	include/fslp/tree.hpp
 	include/fslp/tree_fix.hpp
 	include/fslp/tree_t.hpp
 	include/fslp/tree_x.hpp
+	include/fslp/tree_x_fix.hpp
 	include/fslp/var.hpp
 	src/main.cpp
 	src/nav.cpp

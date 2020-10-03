@@ -35,7 +35,6 @@ set(
 	include/fslp/forest_x.hpp
 	include/fslp/forest_x_fix.hpp
 	include/fslp/forest_x_t.hpp
-	include/fslp/is_fix.hpp
 	include/fslp/slp.hpp
 	include/fslp/tree.hpp
 	include/fslp/tree_fix.hpp
@@ -46,20 +45,6 @@ set(
 	src/main.cpp
 	src/nav.cpp
 )
-
-#add_executable(
-#	fslp
-#	${FSLP_FILES}
-#)
-
-#target_link_libraries(
-#	fslp
-#	PRIVATE
-#	fcppt_core_interface
-#	fslp_interface
-#)
-
-#fcppt_utils_set_target_compiler_flags(fslp)
 
 option(ENABLE_TEST "Build the tests" ON)
 

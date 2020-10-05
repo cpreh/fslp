@@ -41,8 +41,8 @@ set(
 	include/fslp/tree_t.hpp
 	include/fslp/tree_x.hpp
 	include/fslp/tree_x_fix.hpp
+	include/fslp/tree_x_t.hpp
 	include/fslp/var.hpp
-	src/main.cpp
 	src/nav.cpp
 )
 

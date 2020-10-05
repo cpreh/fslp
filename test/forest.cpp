@@ -6,7 +6,6 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
 TEST_CASE("fslp::forest","[fslp]")
 {
   using forest = fslp::forest_fix<char>;

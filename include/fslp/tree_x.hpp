@@ -12,7 +12,7 @@ template <typename Ch>
 struct tree_x
 {
   template<typename T, typename F>
-  using type = std::tuple<Ch, T>;
+  using type = std::tuple<Ch, F>;
 };
 
 }

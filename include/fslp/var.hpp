@@ -6,6 +6,7 @@ namespace fslp
 
 struct var {};
 
+[[nodiscard]] inline bool operator==(fslp::var const &, fslp::var const &) { return true; }
 }
 
 #endif

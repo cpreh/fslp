@@ -24,16 +24,20 @@ TEST_CASE("fslp::forest_x","[fslp]")
   fcppt::variant::match(
       x.get(),
       [](fslp::var) { CHECK(true); },
-      [](std::tuple<forest, forest_x> const &) { CHECK(false); },
-      [](std::tuple<forest_x, forest> const &) { CHECK(false); });
+      [](std::tuple<forest, tree_x, forest> const &) { CHECK(false); });
 
   forest const e{std::vector<tree>{}};
 
-  forest_x const xe{forest_x_t{std::make_tuple(x,e)}};
+  tree_x const xt{std::make_tuple('a',x)};
+
+  forest_x const xe{forest_x_t{std::make_tuple(e,xt,e)}};
 
   fcppt::variant::match(
       xe.get(),
       [](fslp::var) { CHECK(false); },
-      [](std::tuple<forest, forest_x> const &) { CHECK(false); },
-      [](std::tuple<forest_x, forest> const &v) { CHECK(std::get<1>(v)->empty()); });
+      [&xt](std::tuple<forest, tree_x, forest> const &v) {
+        CHECK(std::get<0>(v)->empty());
+        CHECK(std::get<1>(v) == xt);
+        CHECK(std::get<2>(v)->empty());
+      });
 }

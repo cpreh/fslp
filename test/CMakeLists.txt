@@ -8,7 +8,7 @@ function(add_fslp_test PATH_NAME)
 	)
 endfunction()
 
-add_fslp_test(apply)
+#add_fslp_test(apply)
 add_fslp_test(forest)
 add_fslp_test(forest_alg)
 add_fslp_test(forest_x)

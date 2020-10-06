@@ -20,24 +20,6 @@ struct slp
 }
 
 #if 0
-template <typename F>
-fcppt::unit map(F const &, fcppt::unit const _x)
-{
-  return _x;
-}
-
-template<typename F, typename... Ts>
-auto map(F const &_f, std::tuple<Ts...> const &_t)
-{
-  return fcppt::container::tuple::map(_f,_t);
-}
-
-template<typename F, typename... Ts>
-auto map(F const &_f, fcppt::variant::object<Ts...> const &_t)
-{
-  return fcppt::variant::apply(_f,_t);
-}
-
 template<typename... Ns, template<typename...> class... Cs, typename T>
 auto unfold(typename slp<Ns>:: template type<Cs...> const &_slp, T const &_val)
 {

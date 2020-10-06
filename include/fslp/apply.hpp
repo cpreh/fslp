@@ -13,10 +13,14 @@
 
 namespace fslp
 {
+
+template <typename Ch>
+fslp::forest_fix<Ch> apply(fslp::forest_x_fix<Ch> const &, fslp::forest_fix<Ch> const &);
+
 template <typename Ch>
 fslp::tree_fix<Ch> apply(fslp::tree_x_fix<Ch> const &x, fslp::forest_fix<Ch> const &f)
 {
-  return fslp::tree_fix<Ch>{std::get<0>(x), fslp::apply(std::get<1>(x),f)};
+  return fslp::tree_fix<Ch>{std::make_tuple(std::get<0>(x.get()), fslp::apply<Ch>(std::get<1>(x.get()),f))};
 }
 
 template <typename Ch>
@@ -28,10 +32,11 @@ fslp::forest_fix<Ch> apply(fslp::forest_x_fix<Ch> const &x, fslp::forest_fix<Ch>
       [&f](std::tuple<fslp::forest_fix<Ch>, fslp::tree_x_fix<Ch>, fslp::forest_fix<Ch>> const &r) {
         return fslp::forest_fix<Ch>{fcppt::container::join(
             std::get<0>(r).get(),
-            fslp::apply<Ch>(std::get<1>(r), f.get()).get(),
+            std::vector<fslp::tree_fix<Ch>>{fslp::apply<Ch>(std::get<1>(r), f.get())},
             std::get<2>(r).get())};
       });
 }
+
 }
 
 #endif

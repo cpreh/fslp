@@ -5,6 +5,7 @@
 #include <fslp/forest_x_fix.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_x_fix.hpp>
+#include <fslp/var.hpp>
 #include <fcppt/container/join.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -28,11 +29,11 @@ fslp::forest_fix<Ch> apply(fslp::forest_x_fix<Ch> const &x, fslp::forest_fix<Ch>
 {
   return fcppt::variant::match(
       x.get(),
-      [&f](var) { return f; },
+      [&f](fslp::var) { return f; },
       [&f](std::tuple<fslp::forest_fix<Ch>, fslp::tree_x_fix<Ch>, fslp::forest_fix<Ch>> const &r) {
         return fslp::forest_fix<Ch>{fcppt::container::join(
             std::get<0>(r).get(),
-            std::vector<fslp::tree_fix<Ch>>{fslp::apply<Ch>(std::get<1>(r), f.get())},
+            std::vector<fslp::tree_fix<Ch>>{fslp::apply<Ch>(std::get<1>(r), f)},
             std::get<2>(r).get())};
       });
 }

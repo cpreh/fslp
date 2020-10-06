@@ -35,6 +35,22 @@ eval(fslp::forest_alg_t<Ch, fslp::forest_fix<Ch>, fslp::forest_x_fix<Ch>> const 
         return forest{std::vector<tree>{tree{std::make_tuple(std::get<0>(r), std::get<1>(r))}}};
       });
 }
+
+/*
+template<typename Ch>
+fslp::forest_x_fix<Ch>
+eval(fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>< fslp::forest_x<Ch>> const &v)
+{
+  return fcppt::variant::mathc(
+    [](std::tuple<Ch,forest,forest> const &r)
+    {
+    },
+    [](std::tuple<forest_x,forest_x> const &r)
+    {
+    }
+  );
+}*/
+
 }
 
 TEST_CASE("fslp::forest_alg_eval","[fslp]")

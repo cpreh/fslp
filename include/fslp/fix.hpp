@@ -19,7 +19,7 @@ struct fix
   using rec = typename fslp::detail::make_fix<Cs...>::type;
 
   template<typename U, typename = std::enable_if_t<std::is_same_v<fcppt::type_traits::remove_cv_ref_t<U>,rec>>>
-  fix(U &&_val) : v{std::forward<U>(_val)} {}
+  explicit fix(U &&_val) : v{std::forward<U>(_val)} {}
 
   [[nodiscard]] rec const &get() const { return v.get(); }
   [[nodiscard]] rec const *operator->() const { return &this->get(); }

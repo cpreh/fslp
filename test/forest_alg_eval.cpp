@@ -39,11 +39,12 @@ eval(fslp::forest_alg_t<Ch, fslp::forest_fix<Ch>, fslp::forest_x_fix<Ch>> const 
 /*
 template<typename Ch>
 fslp::forest_x_fix<Ch>
-eval(fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>< fslp::forest_x<Ch>> const &v)
+eval(fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>, fslp::forest_fix<Ch>> const &v)
 {
-  return fcppt::variant::mathc(
+  return fcppt::variant::match(
     [](std::tuple<Ch,forest,forest> const &r)
     {
+      return fslp::forest_x_fix<Ch>{};
     },
     [](std::tuple<forest_x,forest_x> const &r)
     {

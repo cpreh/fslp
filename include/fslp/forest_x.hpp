@@ -15,7 +15,7 @@ struct forest_x
 {
   template <typename F, typename T>
   using type =
-      fcppt::variant::object<fslp::var, std::tuple<fslp::forest_fix<Ch>, T, fslp::forest_fix<Ch>>>;
+      std::tuple<fslp::forest_fix<Ch>, fcppt::variant::object<fslp::var, T>, fslp::forest_fix<Ch>>;
 };
 }
 

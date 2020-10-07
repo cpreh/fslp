@@ -27,7 +27,7 @@ eval(fslp::forest_alg_t<Ch, fslp::forest_fix<Ch>, fslp::forest_x_fix<Ch>> const 
       v,
       [](fcppt::unit) { return forest{std::vector<tree>{}}; },
       [](std::tuple<forest, forest> const &r) {
-        return forest{fcppt::container::join(std::get<0>(r).get(), std::get<1>(r).get())};
+        return forest{fcppt::container::join(std::get<0>(r).unfix(), std::get<1>(r).unfix())};
       },
       [](std::tuple<forest_x, forest> const &r) {
         return fslp::apply<Ch>(std::get<0>(r), std::get<1>(r));
@@ -37,25 +37,24 @@ eval(fslp::forest_alg_t<Ch, fslp::forest_fix<Ch>, fslp::forest_x_fix<Ch>> const 
       });
 }
 
-#if 0
 template<typename Ch>
 fslp::forest_x_fix<Ch>
 eval(fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>, fslp::forest_fix<Ch>> const &v)
 {
   using forest = fslp::forest_fix<Ch>;
   using forest_x = fslp::forest_x_fix<Ch>;
+  using tree_x = fslp::tree_fix<Ch>;
 
   return fcppt::variant::match(
     [](std::tuple<Ch,forest,forest> const &r)
     {
-      return fslp::forest_x_fix<Ch>{};
+      return fslp::forest_x_fix<Ch>{std::make_tuple(e,fslp::forest_x_r<tree_x>};
     },
     [](std::tuple<forest_x,forest_x> const &r)
     {
     }
   );
 }
-#endif
 
 }
 

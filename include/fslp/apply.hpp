@@ -27,17 +27,16 @@ fslp::tree_fix<Ch> apply(fslp::tree_x_fix<Ch> const &x, fslp::forest_fix<Ch> con
 template <typename Ch>
 fslp::forest_fix<Ch> apply(fslp::forest_x_fix<Ch> const &x, fslp::forest_fix<Ch> const &f)
 {
-  return fcppt::container::join(
-      std::get<0>(x.get()).get(),
+  return fslp::forest_fix<Ch>{fcppt::container::join(
+      std::get<0>(x.unfix()).unfix(),
       fcppt::variant::match(
-          std::get<1>(x.get()),
-          [&f](fslp::var) -> std::vector<fslp::tree_fix<Ch>> const & { return f.get(); },
+          std::get<1>(x.unfix()),
+          [&f](fslp::var) -> std::vector<fslp::tree_fix<Ch>> const & { return f.unfix(); },
           [&f](fslp::tree_x_fix<Ch> const &r) -> std::vector<fslp::tree_fix<Ch>> const & {
-            return fslp::apply<Ch>(std::get<1>(r.get()), f).get();
+            return fslp::apply<Ch>(std::get<1>(r.unfix()), f).unfix();
           }),
-      std::get<2>(x.get()).get());
+      std::get<2>(x.unfix()).unfix())};
 }
-
 }
 
 #endif

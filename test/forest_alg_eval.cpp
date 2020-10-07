@@ -37,6 +37,7 @@ eval(fslp::forest_alg_t<Ch, fslp::forest_fix<Ch>, fslp::forest_x_fix<Ch>> const 
       });
 }
 
+#if 0
 template<typename Ch>
 fslp::forest_x_fix<Ch>
 eval(fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>, fslp::forest_fix<Ch>> const &v)
@@ -54,6 +55,7 @@ eval(fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>, fslp::forest_fix<Ch>> cons
     }
   );
 }
+#endif
 
 }
 

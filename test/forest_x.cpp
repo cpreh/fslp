@@ -1,6 +1,6 @@
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_x_fix.hpp>
-#include <fslp/forest_x_t.hpp>
+#include <fslp/forest_x_r.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_x_fix.hpp>
 #include <fcppt/variant/match.hpp>
@@ -17,27 +17,25 @@ TEST_CASE("fslp::forest_x","[fslp]")
   using tree = fslp::tree_fix<char>;
   using forest_x = fslp::forest_x_fix<char>;
   using tree_x = fslp::tree_x_fix<char>;
-  using forest_x_t = fslp::forest_x_t<char,forest_x,tree_x>;
-
-  forest_x const x{forest_x_t{fslp::var{}}};
-
-  fcppt::variant::match(
-      x.get(),
-      [](fslp::var) { CHECK(true); },
-      [](std::tuple<forest, tree_x, forest> const &) { CHECK(false); });
+  using forest_x_r = fslp::forest_x_r<tree_x>;
 
   forest const e{std::vector<tree>{}};
 
-  tree_x const xt{std::make_tuple('a',x)};
-
-  forest_x const xe{forest_x_t{std::make_tuple(e,xt,e)}};
+  forest_x const x{std::make_tuple(e,forest_x_r{fslp::var{}},e)};
 
   fcppt::variant::match(
-      xe.get(),
+      std::get<1>(x.get()),
+      [](fslp::var) { CHECK(true); },
+      [](tree_x const &) { CHECK(false); });
+
+  tree_x const xt{std::make_tuple('a',x)};
+
+  forest_x const xe{std::make_tuple(e,forest_x_r{xt},e)};
+
+  fcppt::variant::match(
+      std::get<1>(xe.get()),
       [](fslp::var) { CHECK(false); },
-      [&xt](std::tuple<forest, tree_x, forest> const &v) {
-        CHECK(std::get<0>(v)->empty());
-        CHECK(std::get<1>(v) == xt);
-        CHECK(std::get<2>(v)->empty());
+      [&xt](tree_x const &v) {
+        CHECK(v == xt);
       });
 }

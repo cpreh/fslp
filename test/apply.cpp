@@ -2,7 +2,7 @@
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_t.hpp>
 #include <fslp/forest_x_fix.hpp>
-#include <fslp/forest_x_t.hpp>
+#include <fslp/forest_x_r.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_x_fix.hpp>
 #include <fslp/var.hpp>
@@ -18,9 +18,9 @@ TEST_CASE("fslp::apply","[fslp]")
   using forest_x = fslp::forest_x_fix<char>;
   using tree_x = fslp::tree_x_fix<char>;
   using forest_t = fslp::forest_t<char,forest,tree>;
-  using forest_x_t = fslp::forest_x_t<char,forest_x,tree_x>;
+  using forest_x_r = fslp::forest_x_r<tree_x>;
 
   forest const e{forest_t{}};
 
-  CHECK(fslp::apply<char>(forest_x{forest_x_t{fslp::var{}}}, e) == e);
+  CHECK(fslp::apply<char>(forest_x{std::make_tuple(e, forest_x_r{fslp::var{}}, e)}, e) == e);
 }

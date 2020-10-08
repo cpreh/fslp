@@ -13,13 +13,13 @@ TEST_CASE("fslp::forest","[fslp]")
 
   forest const e{std::vector<tree>{}};
 
-  CHECK(e->empty());
+  CHECK(e.unfix().empty());
 
   tree const t{std::make_tuple('a',e)};
 
-  CHECK(std::get<0>(t.get()) == 'a');
+  CHECK(std::get<0>(t.unfix()) == 'a');
 
   forest const tt{std::vector<tree>{t,t}};
 
-  CHECK(std::get<0>(tt->at(0U).get()) == 'a');
+  CHECK(std::get<0>(tt.unfix().at(0U).unfix()) == 'a');
 }

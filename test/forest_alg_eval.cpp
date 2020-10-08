@@ -7,6 +7,8 @@
 #include <fslp/forest_x_r.hpp>
 #include <fslp/tree.hpp>
 #include <fslp/tree_fix.hpp>
+#include <fslp/tree_x_fix.hpp>
+#include <fslp/var.hpp>
 #include <fcppt/container/join.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/config/external_begin.hpp>
@@ -50,7 +52,7 @@ auto eval(fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>, fslp::forest_fix<Ch>>
   using tree_x = fslp::tree_fix<Ch>;
   using forest_x_r = fslp::forest_x_r<tree_x>;
 
-  return fcppt::variant::match(
+  return fcppt::variant::match(v,
       [](std::tuple<Ch, forest, forest> const &r) {
         forest_x const i{std::make_tuple(std::get<1>(r), forest_x_r{fslp::var{}}, std::get<2>(r))};
         forest const e{std::vector<tree>{}};
@@ -68,11 +70,18 @@ TEST_CASE("fslp::forest_alg_eval","[fslp]")
   using forest = fslp::forest_fix<char>;
   using tree = fslp::tree_fix<char>;
   using forest_x = fslp::forest_x_fix<char>;
+  using tree_x = fslp::tree_x_fix<char>;
+  using forest_x_r = fslp::forest_x_r<tree_x>;
   using forest_alg_t = fslp::forest_alg_t<char,forest,forest_x>;
   using forest_alg_x_t = fslp::forest_alg_x_t<char,forest_x,forest>;
 
   forest const e{std::vector<tree>{}};
 
   CHECK(eval<char>(forest_alg_t{fcppt::unit{}}) == forest{std::vector<tree>{}});
-//  CHECK(eval<char>(forest_alg_x_t{std::make_tuple('a',e,e)}) ==
+
+  forest_x const i{std::make_tuple(e, forest_x_r{fslp::var{}}, e)};
+
+  CHECK(
+      eval<char>(forest_alg_x_t{std::make_tuple('a', e, e)}) ==
+      forest_x{std::make_tuple(e, forest_x_r{tree_x{std::make_tuple('a', i)}}, e)});
 }

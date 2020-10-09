@@ -26,6 +26,7 @@ set(
 	include/fslp/fix_fwd.hpp
 	include/fslp/forest.hpp
 	include/fslp/forest_alg.hpp
+	include/fslp/forest_alg_eval.hpp
 	include/fslp/forest_alg_fix.hpp
 	include/fslp/forest_alg_t.hpp
 	include/fslp/forest_alg_x.hpp

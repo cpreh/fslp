@@ -48,11 +48,12 @@ auto eval(fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>, fslp::forest_fix<Ch>>
 {
   using forest = fslp::forest_fix<Ch>;
   using forest_x = fslp::forest_x_fix<Ch>;
-  using tree = fslp::tree<Ch>;
-  using tree_x = fslp::tree_fix<Ch>;
+  using tree = fslp::tree_fix<Ch>;
+  using tree_x = fslp::tree_x_fix<Ch>;
   using forest_x_r = fslp::forest_x_r<tree_x>;
 
-  return fcppt::variant::match(v,
+  return fcppt::variant::match(
+      v,
       [](std::tuple<Ch, forest, forest> const &r) {
         forest_x const i{std::make_tuple(std::get<1>(r), forest_x_r{fslp::var{}}, std::get<2>(r))};
         forest const e{std::vector<tree>{}};

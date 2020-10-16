@@ -9,6 +9,8 @@ find_package(Metal REQUIRED)
 
 include(FcpptCMakeUtils)
 
+fcppt_utils_static_shared()
+
 add_library(fslp_interface INTERFACE)
 
 target_include_directories(

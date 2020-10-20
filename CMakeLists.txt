@@ -39,9 +39,12 @@ set(
 	include/fslp/forest_x.hpp
 	include/fslp/forest_x_fix.hpp
 	include/fslp/forest_x_r.hpp
+	include/fslp/map.hpp
+	include/fslp/map_result.hpp
 	include/fslp/slp.hpp
 	include/fslp/tree.hpp
 	include/fslp/tree_fix.hpp
+	include/fslp/tree_t.hpp
 	include/fslp/tree_x.hpp
 	include/fslp/tree_x_fix.hpp
 	include/fslp/unfold.hpp

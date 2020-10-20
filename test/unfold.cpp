@@ -19,7 +19,7 @@ TEST_CASE("fslp::unfold","[fslp]")
   using forest_i = fslp::forest_t<char,int,int>;
   using tree_i = fslp::tree_t<char,int,int>;
 
-  auto const func{fcppt::overload(
+  auto const size{fcppt::overload(
       [](forest_i const &f) { return fcppt::algorithm::fold(f, 0, std::plus<int>{} ); },
       [](tree_i const &t) { return 1 + std::get<1>(t); })};
 
@@ -27,5 +27,5 @@ TEST_CASE("fslp::unfold","[fslp]")
   tree const t{std::make_tuple('a',e)};
   forest const tt{std::vector<tree>{t,t}};
 
-  CHECK(fslp::unfold<int>(tt,func) == 2);
+  CHECK(fslp::unfold<int>(tt,size) == 2);
 }

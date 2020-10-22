@@ -3,6 +3,7 @@
 
 #include <fslp/fix.hpp>
 #include <fslp/map.hpp>
+#include <fslp/unfold_result.hpp>
 
 namespace fslp
 {
@@ -13,10 +14,10 @@ T unfold(T const &t, F const &)
   return t;
 }
 
-template <typename R, template <typename...> class... Cs, typename F>
-R unfold(fslp::fix<Cs...> const &x, F const &f)
+template <template <typename...> class... Cs, typename F>
+fslp::unfold_result<fslp::fix<Cs...>,F> unfold(fslp::fix<Cs...> const &x, F const &f)
 {
-  return f(fslp::map([&f](auto const &i) { return fslp::unfold<R>(i, f); }, x.unfix()));
+  return f(fslp::map([&f](auto const &i) { return fslp::unfold(i, f); }, x.unfix()));
 }
 
 }

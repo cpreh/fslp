@@ -27,5 +27,5 @@ TEST_CASE("fslp::unfold","[fslp]")
   tree const t{std::make_tuple('a',e)};
   forest const tt{std::vector<tree>{t,t}};
 
-  CHECK(fslp::unfold(tt,size) == 2);
+  CHECK(fslp::unfold<int>(tt,size) == 2);
 }

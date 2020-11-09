@@ -27,7 +27,7 @@ TEST_CASE("fslp::forest_alg_eval","[fslp]")
 
   forest const e{std::vector<tree>{}};
 
-  CHECK(fslp::forest_alg_eval<char>(forest_alg_t{fcppt::unit{}}) == forest{std::vector<tree>{}});
+  CHECK(fslp::forest_alg_eval<char>(forest_alg_t{fcppt::unit{}}) == e);
 
   forest_x const i{std::make_tuple(e, forest_x_r{fslp::var{}}, e)};
 

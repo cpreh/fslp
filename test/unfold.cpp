@@ -1,9 +1,15 @@
+#include <fslp/forest_alg_eval.hpp>
+#include <fslp/forest_alg_fix.hpp>
+#include <fslp/forest_alg_t.hpp>
+#include <fslp/forest_alg_x_fix.hpp>
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_t.hpp>
+#include <fslp/forest_x.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_t.hpp>
 #include <fslp/unfold.hpp>
 #include <fcppt/overload.hpp>
+#include <fcppt/unit.hpp>
 #include <fcppt/algorithm/fold.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
@@ -12,7 +18,7 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-TEST_CASE("fslp::unfold","[fslp]")
+TEST_CASE("fslp::unfold forest","[fslp]")
 {
   using forest = fslp::forest_fix<char>;
   using tree = fslp::tree_fix<char>;
@@ -28,4 +34,22 @@ TEST_CASE("fslp::unfold","[fslp]")
   forest const tt{std::vector<tree>{t,t}};
 
   CHECK(fslp::unfold<int>(tt,size) == 2);
+}
+
+TEST_CASE("fslp::unfold forest_alg","[fslp]")
+{
+  using forest = fslp::forest_fix<char>;
+  using forest_x = fslp::forest_x_fix<char>;
+  using tree = fslp::tree_fix<char>;
+  using forest_alg_fix = fslp::forest_alg_fix<char>;
+  using forest_alg_x_fix = fslp::forest_alg_x_fix<char>;
+  using forest_alg_t = fslp::forest_alg_t<char,forest_alg_fix,forest_alg_x_fix>;
+
+  auto const func{[](auto const &e) { return fslp::forest_alg_eval<char>(e); }};
+
+  forest_alg_fix const e{forest_alg_t{fcppt::unit{}}};
+
+  forest const fe{std::vector<tree>{}};
+
+  CHECK(fslp::unfold<forest,forest_x>(e,func) == fe);
 }

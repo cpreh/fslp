@@ -18,8 +18,8 @@
 namespace fslp
 {
 template <typename Ch>
-auto forest_alg_eval(fslp::forest_alg_t<Ch, fslp::forest_fix<Ch>, fslp::forest_x_fix<Ch>> const &v)
-    -> fslp::forest_fix<Ch>
+fslp::forest_fix<Ch>
+forest_alg_eval(fslp::forest_alg_t<Ch, fslp::forest_fix<Ch>, fslp::forest_x_fix<Ch>> const &v)
 {
   using forest = fslp::forest_fix<Ch>;
   using forest_x = fslp::forest_x_fix<Ch>;
@@ -40,9 +40,8 @@ auto forest_alg_eval(fslp::forest_alg_t<Ch, fslp::forest_fix<Ch>, fslp::forest_x
 }
 
 template <typename Ch>
-auto forest_alg_eval(
-    fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>, fslp::forest_fix<Ch>> const &v)
-    -> fslp::forest_x_fix<Ch>
+fslp::forest_x_fix<Ch>
+forest_alg_eval(fslp::forest_alg_x_t<Ch, fslp::forest_x_fix<Ch>, fslp::forest_fix<Ch>> const &v)
 {
   using forest = fslp::forest_fix<Ch>;
   using forest_x = fslp::forest_x_fix<Ch>;

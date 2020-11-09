@@ -7,16 +7,27 @@
 namespace fslp
 {
 
-template<typename T, typename F>
+namespace detail
+{
+
+template<typename... Rs, typename T, typename F>
 T unfold(T const &t, F const &)
 {
   return t;
 }
 
-template <typename R, template <typename...> class... Cs, typename F>
+template <typename R, typename... Rs, template <typename...> class... Cs, typename F>
 R unfold(fslp::fix<Cs...> const &x, F const &f)
 {
-  return f(fslp::map([&f](auto const &i) { return fslp::unfold<R>(i, f); }, x.unfix()));
+  return f(fslp::map([&f](auto const &i) { return fslp::detail::unfold<Rs..., R>(i, f); }, x.unfix()));
+}
+
+}
+
+template <typename R, typename... Rs, template <typename...> class... Cs, typename F>
+R unfold(fslp::fix<Cs...> const &x, F const &f)
+{
+  return fslp::detail::unfold<R,Rs...>(x,f);
 }
 
 }

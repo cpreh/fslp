@@ -2,15 +2,18 @@
 #define FSLP_UNFOLD_HPP_INCLUDED
 
 #include <fslp/fix.hpp>
+#include <fslp/is_fix.hpp>
 #include <fslp/map.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <type_traits>
+#include <fcppt/config/external_end.hpp>
 
 namespace fslp
 {
-
 namespace detail
 {
 
-template<typename... Rs, typename T, typename F>
+template<typename... Rs, typename T, typename F, typename = std::enable_if_t<!fslp::is_fix<T>::value>>
 T unfold(T const &t, F const &)
 {
   return t;

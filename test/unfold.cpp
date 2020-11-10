@@ -70,24 +70,32 @@ TEST_CASE("fslp::unfold forest_alg","[fslp]")
   CHECK(fslp::unfold<forest,forest_x>(e,func) == fe);
 }
 
-#if 0
+namespace
+{
+
+struct S1{};
+bool operator==(S1,S1) { return true; }
+struct S2{};
+
 template<typename T1, typename T2>
-using test1 = std::tuple<T1,T2>;
+using test1 = std::tuple<long,T2>;
 
 template<typename T2, typename T1>
 using test2 = std::vector<T1>;
 
-using test_fix = fslp::fix<test1,test2>;
-
-test_fix get_fix();
+}
 
 TEST_CASE("fslp::unfold test","[fslp]")
 {
+  using test_fix_1 = fslp::fix<test1,test2>;
+  using test_fix_2 = fslp::fix<test2,test1>;
+
   auto const func{fcppt::overload(
-    [](test1<int,bool> const &) -> int { return 0; },
-    [](test2<bool,int> const &) -> bool { return true; }
+    [](test1<S1,S2> const &) -> S1 { return S1{}; },
+    [](test2<S2,S1> const &) -> S2 { return S2{}; }
   )};
 
-  fslp::unfold<int,bool>(get_fix(),func);
+  test_fix_1 const e{std::make_tuple(1L,test_fix_2{std::vector<test_fix_1>{}})};
+
+  CHECK(fslp::unfold<S1,S2>(e,func) == S1{});
 }
-#endif

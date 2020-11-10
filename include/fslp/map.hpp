@@ -26,26 +26,33 @@ inline fslp::map_result<F, fslp::base<T>> map(F const &, fslp::base<T> t)
   return t;
 }
 
+template <typename F, typename T>
+fslp::map_result<F, std::vector<T>> map(F const &, std::vector<T> const &);
+
 template <typename F, typename... Ts>
-fslp::map_result<F, std::tuple<Ts...>> map(F const &f, std::tuple<Ts...> const &t)
-{
-  return fcppt::container::tuple::map(t, [&f](auto const &i) { return fslp::map(f,i); });
-}
+fslp::map_result<F, std::tuple<Ts...>> map(F const &, std::tuple<Ts...> const &);
 
 template <typename F, typename... Ts>
 fslp::map_result<F, fcppt::variant::object<Ts...>>
 map(F const &f, fcppt::variant::object<Ts...> const &v)
 {
   using result = fslp::map_result<F, fcppt::variant::object<Ts...>>;
-  return fcppt::variant::apply([&f](auto const &x) { return result{f(x)}; }, v);
+  return fcppt::variant::apply([&f](auto const &x) { return result{fslp::map(f,x)}; }, v);
 }
 
 template <typename F, typename T>
 fslp::map_result<F, std::vector<T>> map(F const &f, std::vector<T> const &v)
 {
   using result = fslp::map_result<F, std::vector<T>>;
-  return fcppt::algorithm::map<result>(v, f);
+  return fcppt::algorithm::map<result>(v, [&](auto const &i) { return fslp::map(f,i); });
 }
+
+template <typename F, typename... Ts>
+fslp::map_result<F, std::tuple<Ts...>> map(F const &f, std::tuple<Ts...> const &t)
+{
+  return fcppt::container::tuple::map(t, [&f](auto const &i) { return fslp::map(f,i); });
+}
+
 }
 
 #endif

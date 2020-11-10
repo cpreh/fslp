@@ -1,3 +1,4 @@
+#include <fslp/base.hpp>
 #include <fslp/forest_alg_eval.hpp>
 #include <fslp/forest_alg_fix.hpp>
 #include <fslp/forest_alg_t.hpp>
@@ -19,10 +20,6 @@
 #include <tuple>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
-
-#include <fcppt/type_name_from_info.hpp>
-#include <iostream>
-#include <typeinfo>
 
 TEST_CASE("fslp::unfold forest","[fslp]")
 {
@@ -50,11 +47,7 @@ TEST_CASE("fslp::unfold forest_alg","[fslp]")
   using forest_x = fslp::forest_x_fix<char>;
   using tree = fslp::tree_fix<char>;
 
-  using forest_alg_fix = fslp::forest_alg_fix<char>;
-
   auto const func{fcppt::overload(
-      //[](auto const &f) -> forest {
-      //std::cout << fcppt::type_name_from_info(typeid(f)) << '\n';
       [](fslp::forest_alg_t<char, forest, forest_x> const &) -> forest {
         return forest{std::vector<tree>{}};
       },
@@ -62,6 +55,7 @@ TEST_CASE("fslp::unfold forest_alg","[fslp]")
         return fslp::forest_alg_eval<char>(f);
       })};
 
+  using forest_alg_fix = fslp::forest_alg_fix<char>;
   using forest_alg_x_fix = fslp::forest_alg_x_fix<char>;
   using forest_alg_t = fslp::forest_alg_t<char,forest_alg_fix,forest_alg_x_fix>;
 
@@ -81,10 +75,10 @@ bool operator==(S1,S1) { return true; }
 struct S2{};
 
 template<typename T1, typename T2>
-using test1 = fcppt::variant::object<long,T2>;
+using test1 = fcppt::variant::object<fslp::base<long>,T2>;
 
 template<typename T2, typename T1>
-using test2 = std::vector<T1>;
+using test2 = std::tuple<fslp::base<char>,std::vector<T1>>;
 
 }
 
@@ -93,13 +87,15 @@ TEST_CASE("fslp::unfold two types","[fslp]")
   using test_fix_1 = fslp::fix<test1,test2>;
   using test_fix_2 = fslp::fix<test2,test1>;
   using test_1_t = test1<test_fix_1,test_fix_2>;
+  using test_2_t = test2<test_fix_2,test_fix_1>;
 
   auto const func{fcppt::overload(
     [](test1<S1,S2> const &) -> S1 { return S1{}; },
     [](test2<S2,S1> const &) -> S2 { return S2{}; }
   )};
 
-  test_fix_1 const e{test_1_t{test_fix_2{std::vector<test_fix_1>{}}}};
+  test_fix_2 const i{test_2_t{std::make_tuple('c',std::vector<test_fix_1>{})}};
+  test_fix_1 const e{test_1_t{i}};
 
   CHECK(fslp::unfold<S1,S2>(e,func) == S1{});
 }

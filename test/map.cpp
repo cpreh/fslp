@@ -30,13 +30,12 @@ TEST_CASE("fslp::map","[fslp]")
   CHECK(
       fslp::map(func, std::make_tuple(4, std::string{"test"})) ==
       std::make_tuple(4L, std::wstring{L"test"}));
-#if 0
+
+  CHECK(fslp::map([](int const x) { return long{x}; }, std::vector<int>{1,2,3}) == std::vector<long>{1L,2L,3L});
+
   using variant = fcppt::variant::object<std::string, int>;
   using variant_r = fcppt::variant::object<std::wstring, long>;
 
   CHECK(fslp::map(func, variant{std::string{"test"}}) == variant_r{std::wstring{L"test"}});
   CHECK(fslp::map(func, variant{4}) == variant_r{4L});
-
-  CHECK(fslp::map([](int const x) { return long{x}; }, std::vector<int>{1,2,3}) == std::vector<long>{1L,2L,3L});
-#endif
 }

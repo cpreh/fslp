@@ -15,11 +15,11 @@ TEST_CASE("fslp::forest","[fslp]")
 
   CHECK(e.unfix().empty());
 
-  tree const t{std::make_tuple('a',e)};
+  tree const t{std::make_tuple(fslp::base{'a'},e)};
 
-  CHECK(std::get<0>(t.unfix()) == 'a');
+  CHECK(std::get<0>(t.unfix()).get() == 'a');
 
   forest const tt{std::vector<tree>{t,t}};
 
-  CHECK(std::get<0>(tt.unfix().at(0U).unfix()) == 'a');
+  CHECK(std::get<0>(tt.unfix().at(0U).unfix()).get() == 'a');
 }

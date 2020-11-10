@@ -40,7 +40,6 @@ TEST_CASE("fslp::unfold forest","[fslp]")
   CHECK(fslp::unfold<int>(tt,size) == 2);
 }
 
-#if 0
 TEST_CASE("fslp::unfold forest_alg","[fslp]")
 {
   using forest = fslp::forest_fix<char>;
@@ -65,7 +64,6 @@ TEST_CASE("fslp::unfold forest_alg","[fslp]")
 
   CHECK(fslp::unfold<forest,forest_x>(e,func) == fe);
 }
-#endif
 
 namespace
 {

@@ -1,6 +1,7 @@
 #ifndef FSLP_FOREST_ALG_X_HPP_INCLUDED
 #define FSLP_FOREST_ALG_X_HPP_INCLUDED
 
+#include <fslp/base.hpp>
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <tuple>
@@ -13,7 +14,7 @@ template <typename Ch>
 struct forest_alg_x
 {
   template <typename Rx, typename R>
-  using type = fcppt::variant::object<std::tuple<Ch, R, R>, std::tuple<Rx, Rx>>;
+  using type = fcppt::variant::object<std::tuple<fslp::base<Ch>, R, R>, std::tuple<Rx, Rx>>;
 };
 
 }

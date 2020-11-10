@@ -21,7 +21,7 @@ inline fslp::map_result<F, T> map(F const &f, T const &t)
 }
 
 template <typename F, typename T>
-inline fslp::map_result<F, fslp::base<T>> map(F const &, fslp::base<T> const &t)
+inline fslp::map_result<F, fslp::base<T>> map(F const &, fslp::base<T> t)
 {
   return t;
 }
@@ -29,7 +29,7 @@ inline fslp::map_result<F, fslp::base<T>> map(F const &, fslp::base<T> const &t)
 template <typename F, typename... Ts>
 fslp::map_result<F, std::tuple<Ts...>> map(F const &f, std::tuple<Ts...> const &t)
 {
-  return fcppt::container::tuple::map(t, f);
+  return fcppt::container::tuple::map(t, [&f](auto const &i) { return fslp::map(f,i); });
 }
 
 template <typename F, typename... Ts>

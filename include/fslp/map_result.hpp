@@ -34,7 +34,12 @@ struct map_result<F, fslp::base<T>>
 template <typename F, typename... Ts>
 struct map_result<F, std::tuple<Ts...>>
 {
-  using type = fcppt::container::tuple::map_result<std::tuple<fslp::detail::map_result_t<F,Ts>...>,F>;
+  struct map_inner
+  {
+    template <typename T>
+    fslp::detail::map_result_t<F, T> operator()(T);
+  };
+  using type = fcppt::container::tuple::map_result<std::tuple<Ts...>,map_inner>;
 };
 
 template <typename F, typename... Ts>

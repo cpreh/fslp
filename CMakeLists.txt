@@ -22,6 +22,8 @@ target_include_directories(
 set(
 	FSLP_FILES
 	include/fslp/apply.hpp
+	include/fslp/base.hpp
+	include/fslp/base_fwd.hpp
 	include/fslp/compose.hpp
 	include/fslp/detail/make_fix.hpp
 	include/fslp/fix.hpp
@@ -39,6 +41,8 @@ set(
 	include/fslp/forest_x.hpp
 	include/fslp/forest_x_fix.hpp
 	include/fslp/forest_x_r.hpp
+	include/fslp/is_cv_fix.hpp
+	include/fslp/is_fix.hpp
 	include/fslp/map.hpp
 	include/fslp/map_result.hpp
 	include/fslp/slp.hpp

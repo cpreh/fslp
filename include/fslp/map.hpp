@@ -1,8 +1,8 @@
 #ifndef FSLP_MAP_HPP_INCLUDED
 #define FSLP_MAP_HPP_INCLUDED
 
+#include <fslp/base_fwd.hpp>
 #include <fslp/map_result.hpp>
-#include <fcppt/unit.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/container/tuple/map.hpp>
 #include <fcppt/variant/apply.hpp>
@@ -14,10 +14,16 @@
 
 namespace fslp
 {
-template <typename F>
-inline fcppt::unit map(F const &, fcppt::unit)
+template <typename F, typename T>
+inline fslp::map_result<F, T> map(F const &f, T const &t)
 {
-  return fcppt::unit{};
+  return f(t);
+}
+
+template <typename F, typename T>
+inline fslp::map_result<F, fslp::base<T>> map(F const &, fslp::base<T> const &t)
+{
+  return t;
 }
 
 template <typename F, typename... Ts>

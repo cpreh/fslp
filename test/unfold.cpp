@@ -19,6 +19,10 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
+#include <fcppt/type_name_from_info.hpp>
+#include <iostream>
+#include <typeinfo>
+
 TEST_CASE("fslp::unfold forest","[fslp]")
 {
   using forest_i = fslp::forest_t<char,int,int>;
@@ -44,16 +48,18 @@ TEST_CASE("fslp::unfold forest_alg","[fslp]")
   using forest_x = fslp::forest_x_fix<char>;
   using tree = fslp::tree_fix<char>;
 
+  using forest_alg_fix = fslp::forest_alg_fix<char>;
+
   auto const func{fcppt::overload(
-      //[](fslp::forest_alg_t<char, forest, forest_x> const &f) -> forest {
-      [](auto const &) -> forest {
+      [](auto const &f) -> forest {
+      std::cout << fcppt::type_name_from_info(typeid(f)) << '\n';
+      //[](fslp::forest_alg_t<char, forest, forest_x> const &) -> forest {
         return forest{std::vector<tree>{}};
       },
       [](fslp::forest_alg_x_t<char, forest_x, forest> const &f) -> forest_x {
         return fslp::forest_alg_eval<char>(f);
       })};
 
-  using forest_alg_fix = fslp::forest_alg_fix<char>;
   using forest_alg_x_fix = fslp::forest_alg_x_fix<char>;
   using forest_alg_t = fslp::forest_alg_t<char,forest_alg_fix,forest_alg_x_fix>;
 
@@ -63,3 +69,25 @@ TEST_CASE("fslp::unfold forest_alg","[fslp]")
 
   CHECK(fslp::unfold<forest,forest_x>(e,func) == fe);
 }
+
+#if 0
+template<typename T1, typename T2>
+using test1 = std::tuple<T1,T2>;
+
+template<typename T2, typename T1>
+using test2 = std::vector<T1>;
+
+using test_fix = fslp::fix<test1,test2>;
+
+test_fix get_fix();
+
+TEST_CASE("fslp::unfold test","[fslp]")
+{
+  auto const func{fcppt::overload(
+    [](test1<int,bool> const &) -> int { return 0; },
+    [](test2<bool,int> const &) -> bool { return true; }
+  )};
+
+  fslp::unfold<int,bool>(get_fix(),func);
+}
+#endif

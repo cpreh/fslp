@@ -59,12 +59,13 @@ TEST_CASE("fslp::unfold forest_alg","[fslp]")
   using forest_alg_x_fix = fslp::forest_alg_x_fix<char>;
   using forest_alg_t = fslp::forest_alg_t<char,forest_alg_fix,forest_alg_x_fix>;
 
-  forest_alg_fix const e{forest_alg_t{fcppt::unit{}}};
+  forest_alg_fix const e{forest_alg_t{fslp::base{fcppt::unit{}}}};
 
   forest const fe{std::vector<tree>{}};
 
   CHECK(fslp::unfold<forest,forest_x>(e,func) == fe);
 }
+#endif
 
 namespace
 {
@@ -93,9 +94,8 @@ TEST_CASE("fslp::unfold two types","[fslp]")
     [](test2<S2,S1> const &) -> S2 { return S2{}; }
   )};
 
-  test_fix_2 const i{test_2_t{std::make_tuple('c',std::vector<test_fix_1>{})}};
+  test_fix_2 const i{test_2_t{std::make_tuple(fslp::base{'c'},std::vector<test_fix_1>{})}};
   test_fix_1 const e{test_1_t{i}};
 
   CHECK(fslp::unfold<S1,S2>(e,func) == S1{});
 }
-#endif

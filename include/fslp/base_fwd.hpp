@@ -4,7 +4,7 @@
 namespace fslp
 {
 template<typename T>
-struct base;
+class base;
 }
 
 #endif

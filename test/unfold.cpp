@@ -81,7 +81,7 @@ struct S2
 };
 
 template <typename T1, typename T2>
-using test1 = fcppt::variant::object<fslp::base<long>, T2>;
+using test1 = fcppt::variant::object<fslp::base<int>, T2>;
 
 template <typename T2, typename T1>
 using test2 = std::tuple<fslp::base<char>, std::vector<T1>>;

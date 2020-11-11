@@ -9,13 +9,14 @@
 namespace fslp
 {
 template<typename T>
-struct base
+class base
 {
+public:
   explicit base(T &&x) : v{std::move(x)} {}
 
-  T v;
-
   [[nodiscard]] T const &get() const { return v; }
+private:
+  T v;
 };
 
 template<typename T>

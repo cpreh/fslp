@@ -24,17 +24,18 @@ TEST_CASE("fslp::map","[fslp]")
           [](std::string const &x) { return fcppt::widen(x); },
           std::make_tuple(std::string{"test"})) == std::make_tuple(std::wstring{L"test"}));
 
+  using long_t = long; // NOLINT(google-runtime-int)
   auto const func{fcppt::overload(
-      [](int const x) { return long{x}; }, [](std::string const &s) { return fcppt::widen(s); })};
+      [](int const x) { return long_t{x}; }, [](std::string const &s) { return fcppt::widen(s); })};
 
   CHECK(
       fslp::map(func, std::make_tuple(4, std::string{"test"})) ==
       std::make_tuple(4L, std::wstring{L"test"}));
 
-  CHECK(fslp::map([](int const x) { return long{x}; }, std::vector<int>{1,2,3}) == std::vector<long>{1L,2L,3L});
+  CHECK(fslp::map([](int const x) { return long_t{x}; }, std::vector<int>{1,2,3}) == std::vector<long_t>{1L,2L,3L});
 
   using variant = fcppt::variant::object<std::string, int>;
-  using variant_r = fcppt::variant::object<std::wstring, long>;
+  using variant_r = fcppt::variant::object<std::wstring, long_t>;
 
   CHECK(fslp::map(func, variant{std::string{"test"}}) == variant_r{std::wstring{L"test"}});
   CHECK(fslp::map(func, variant{4}) == variant_r{4L});

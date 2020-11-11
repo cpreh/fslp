@@ -4,7 +4,7 @@
 namespace fslp
 {
 template <template <typename...> class... Cs>
-struct fix;
+class fix;
 }
 
 #endif

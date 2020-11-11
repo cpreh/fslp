@@ -14,15 +14,16 @@ namespace fslp
 {
 
 template <template <typename...> class... Cs>
-struct fix
+class fix
 {
+public:
   using rec = typename fslp::detail::make_fix<Cs...>::type;
 
   template<typename U, typename = std::enable_if_t<std::is_same_v<fcppt::type_traits::remove_cv_ref_t<U>,rec>>>
   explicit fix(U &&_val) : v{std::forward<U>(_val)} {}
 
   [[nodiscard]] rec const &unfix() const { return v.get(); }
-
+private:
   fcppt::recursive<rec> v;
 };
 

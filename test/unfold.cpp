@@ -16,6 +16,7 @@
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
+#include <metal.hpp>
 #include <functional>
 #include <tuple>
 #include <vector>
@@ -37,23 +38,39 @@ TEST_CASE("fslp::unfold forest","[fslp]")
   tree const t{std::make_tuple(fslp::base{'a'},e)};
   forest const tt{std::vector<tree>{t,t}};
 
-  CHECK(fslp::unfold<int>(tt,size) == 2);
+  using types = metal::map<metal::pair<forest,int>,metal::pair<tree,int>>;
+
+  CHECK(fslp::unfold<types>(tt,size) == 2);
 }
 
 #if 0
-TEST_CASE("fslp::unfold forest_alg","[fslp]")
-{
+
   using forest = fslp::forest_fix<char>;
   using forest_x = fslp::forest_x_fix<char>;
   using tree = fslp::tree_fix<char>;
 
+  struct test_func
+  {
+    template <typename R, typename RX>
+    forest operator()(fslp::forest_alg_t<char, R, RX> const &) const;
+    template <typename RX, typename R>
+    forest_x operator()(fslp::forest_alg_x_t<char, RX, R> const &) const;
+  };
+
+
+TEST_CASE("fslp::unfold forest_alg","[fslp]")
+{
+#if 0
   auto const func{fcppt::overload(
-      [](fslp::forest_alg_t<char, forest, forest_x> const &) -> forest {
+      [](auto const &) -> forest{
+      //[](fslp::forest_alg_t<char, forest, forest_x> const &f) -> forest {
         return forest{std::vector<tree>{}};
+        //return fslp::forest_alg_eval<char>(f);
       },
       [](fslp::forest_alg_x_t<char, forest_x, forest> const &f) -> forest_x {
         return fslp::forest_alg_eval<char>(f);
       })};
+#endif
 
   using forest_alg_fix = fslp::forest_alg_fix<char>;
   using forest_alg_x_fix = fslp::forest_alg_x_fix<char>;
@@ -63,7 +80,8 @@ TEST_CASE("fslp::unfold forest_alg","[fslp]")
 
   forest const fe{std::vector<tree>{}};
 
-  CHECK(fslp::unfold<forest,forest_x>(e,func) == fe);
+  CHECK(fslp::unfold<forest,forest_x>(e,test_func{}) == fe);
+//  CHECK(fslp::unfold<forest,forest_x>(e,func) == fe);
 }
 #endif
 
@@ -97,5 +115,7 @@ TEST_CASE("fslp::unfold two types","[fslp]")
   test_fix_2 const i{test_2_t{std::make_tuple(fslp::base{'c'},std::vector<test_fix_1>{})}};
   test_fix_1 const e{test_1_t{i}};
 
-  CHECK(fslp::unfold<S1,S2>(e,func) == S1{});
+  using types = metal::map<metal::pair<test_fix_1,S1>,metal::pair<test_fix_2,S2>>;
+
+  CHECK(fslp::unfold<types>(e,func) == S1{});
 }

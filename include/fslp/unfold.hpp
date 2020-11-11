@@ -3,16 +3,17 @@
 
 #include <fslp/fix.hpp>
 #include <fslp/map.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <metal.hpp>
+#include <fcppt/config/external_end.hpp>
 
 namespace fslp
 {
-
-template <typename R, typename... Rs, template <typename...> class... Cs, typename F>
-R unfold(fslp::fix<Cs...> const &x, F const &f)
+template <typename Types, template <typename...> class... Cs, typename F>
+metal::at_key<Types, fslp::fix<Cs...>> unfold(fslp::fix<Cs...> const &x, F const &f)
 {
-  return f(fslp::map([&f](auto const &i) { return fslp::unfold<Rs...,R>(i, f); }, x.unfix()));
+  return f(fslp::map([&f](auto const &i) { return fslp::unfold<Types>(i, f); }, x.unfix()));
 }
-
 }
 
 #endif

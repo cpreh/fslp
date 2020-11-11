@@ -38,4 +38,13 @@ TEST_CASE("fslp::map","[fslp]")
 
   CHECK(fslp::map(func, variant{std::string{"test"}}) == variant_r{std::wstring{L"test"}});
   CHECK(fslp::map(func, variant{4}) == variant_r{4L});
+
+  using variant2 = fcppt::variant::object<std::tuple<std::string>,std::vector<std::string>>;
+  using variant2_r = fcppt::variant::object<std::tuple<std::wstring>,std::vector<std::wstring>>;
+
+  CHECK(
+      fslp::map(
+          [](std::string const &x) { return fcppt::widen(x); },
+          variant2{std::make_tuple(std::string{"test"})}) ==
+      variant2_r{std::make_tuple(std::wstring{L"test"})});
 }

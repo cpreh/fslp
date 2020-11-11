@@ -28,7 +28,7 @@ TEST_CASE("fslp::forest_x","[fslp]")
       [](fslp::var) { CHECK(true); },
       [](tree_x const &) { CHECK(false); });
 
-  tree_x const xt{std::make_tuple('a',x)};
+  tree_x const xt{std::make_tuple(fslp::base{'a'},x)};
 
   forest_x const xe{std::make_tuple(e,forest_x_r{xt},e)};
 

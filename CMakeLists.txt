@@ -41,8 +41,6 @@ set(
 	include/fslp/forest_x.hpp
 	include/fslp/forest_x_fix.hpp
 	include/fslp/forest_x_r.hpp
-	include/fslp/is_cv_fix.hpp
-	include/fslp/is_fix.hpp
 	include/fslp/map.hpp
 	include/fslp/map_result.hpp
 	include/fslp/slp.hpp
@@ -53,9 +51,15 @@ set(
 	include/fslp/tree_x_fix.hpp
 	include/fslp/unfold.hpp
 	include/fslp/var.hpp
-	src/nav.cpp
-	src/old.cpp
 )
+
+fcppt_utils_add_source_groups("${FSLP_FILES}")
+
+fcppt_utils_add_dummy_target(fslp "${FSLP_FILES}")
+fcppt_utils_set_target_compiler_flags(fslp_dummy)
+target_include_directories(fslp_dummy PRIVATE include)
+target_link_libraries(fslp_dummy PRIVATE Metal fcppt_core_interface)
+set_target_properties(fslp_dummy PROPERTIES FOLDER fslp)
 
 option(ENABLE_TEST "Build the tests" ON)
 

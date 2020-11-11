@@ -5,5 +5,4 @@ set -e -u
 update_cmake \
 	"CMakeLists.txt" \
 	FSLP_FILES \
-	include \
-	src
+	include

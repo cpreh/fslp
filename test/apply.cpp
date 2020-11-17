@@ -10,7 +10,6 @@
 #include <catch2/catch.hpp>
 #include <fcppt/config/external_end.hpp>
 
-
 TEST_CASE("fslp::apply","[fslp]")
 {
   using forest = fslp::forest_fix<char>;

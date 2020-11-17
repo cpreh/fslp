@@ -4,7 +4,6 @@
 #include <fslp/fix_fwd.hpp>
 #include <fslp/detail/rotations.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <cstddef>
 #include <metal.hpp>
 #include <fcppt/config/external_end.hpp>
 

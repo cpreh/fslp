@@ -7,8 +7,9 @@
 
 namespace fslp
 {
-template<typename Ch>
-using forest_alg_fix = fslp::fix<fslp::forest_alg<Ch>:: template type, fslp::forest_alg_x<Ch>:: template type>;
+template <typename Ch>
+using forest_alg_fix =
+    fslp::fix<fslp::forest_alg<Ch>::template type, fslp::forest_alg_x<Ch>::template type>;
 }
 
 #endif

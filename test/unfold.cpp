@@ -2,6 +2,7 @@
 #include <fslp/forest_alg_eval.hpp>
 #include <fslp/forest_alg_fix.hpp>
 #include <fslp/forest_alg_t.hpp>
+#include <fslp/forest_alg_x_eval.hpp>
 #include <fslp/forest_alg_x_fix.hpp>
 #include <fslp/forest_alg_x_t.hpp>
 #include <fslp/forest_fix.hpp>
@@ -54,7 +55,7 @@ TEST_CASE("fslp::unfold forest_alg", "[fslp]")
         return fslp::forest_alg_eval<char>(f);
       },
       [](fslp::forest_alg_x_t<char, forest_x, forest> const &f) -> forest_x {
-        return fslp::forest_alg_eval<char>(f);
+        return fslp::forest_alg_x_eval<char>(f);
       })};
 
   using forest_alg_fix = fslp::forest_alg_fix<char>;

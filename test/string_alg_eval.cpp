@@ -7,7 +7,6 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
 TEST_CASE("fslp::string_alg_eval","[fslp]")
 {
   using string = std::vector<char>;

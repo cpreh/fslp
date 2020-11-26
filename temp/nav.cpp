@@ -25,67 +25,6 @@ template <typename T>
   return nonempty<fcppt::type_traits::remove_cv_ref_t<T>>{std::forward<T>(_value)};
 }
 
-template <typename Ch>
-class string_nav
-{
-public:
-  FCPPT_NONMOVABLE(string_nav);
-
-  string_nav() = default;
-
-  virtual ~string_nav() = default;
-
-  [[nodiscard]] virtual Ch cur() const = 0;
-
-  [[nodiscard]] virtual fcppt::optional::object<fcppt::unique_ptr<string_nav<Ch>>> next() && = 0;
-
-  [[nodiscard]] virtual fcppt::optional::object<fcppt::unique_ptr<string_nav<Ch>>> prev() && = 0;
-};
-
-template <typename Ch>
-class simple_string_nav : public string_nav<Ch>
-{
-public:
-  using pos_type = typename std::vector<Ch>::size_type;
-
-  FCPPT_NONMOVABLE(simple_string_nav);
-
-  simple_string_nav(std::vector<Ch> &&_impl, pos_type _pos) : impl_{_impl}, pos_{_pos} {}
-
-  ~simple_string_nav() override = default;
-
-  [[nodiscard]] Ch cur() const override { return this->impl_[this->pos_]; }
-
-  [[nodiscard]] fcppt::optional::object<fcppt::unique_ptr<string_nav<Ch>>> next() && override
-  {
-    return fcppt::optional::make_if(this->pos_ < this->impl_.size() - 1U, [this] {
-      return fcppt::unique_ptr_to_base<string_nav<Ch>>(
-          fcppt::make_unique_ptr<simple_string_nav>(std::move(this->impl_), this->pos_ + 1U));
-    });
-  }
-
-  [[nodiscard]] fcppt::optional::object<fcppt::unique_ptr<string_nav<Ch>>> prev() && override
-  {
-    return fcppt::optional::make_if(this->pos_ > 0U, [this] {
-      return fcppt::unique_ptr_to_base<string_nav<Ch>>(
-          fcppt::make_unique_ptr<simple_string_nav>(std::move(this->impl_), this->pos_ - 1U));
-    });
-  }
-private:
-  std::vector<Ch> impl_;
-  pos_type pos_;
-};
-
-template <typename Ch>
-[[nodiscard]] fcppt::optional::object<fcppt::unique_ptr<string_nav<Ch>>>
-string_nav_first(std::vector<Ch> &&_string)
-{
-  return fcppt::optional::make_if(!_string.empty(), [&_string] {
-    return fcppt::unique_ptr_to_base<string_nav<Ch>>(
-        fcppt::make_unique_ptr<simple_string_nav<Ch>>(std::move(_string), 0U));
-  });
-}
-
 template <typename Ch, typename N>
 using spine_alph = fcppt::variant::object<std::tuple<Ch, N>, std::tuple<Ch, N, N>>;
 

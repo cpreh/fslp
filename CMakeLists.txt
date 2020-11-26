@@ -47,6 +47,9 @@ set(
 	include/fslp/forest_x_r.hpp
 	include/fslp/map.hpp
 	include/fslp/map_result.hpp
+	include/fslp/nav/simple_string.hpp
+	include/fslp/nav/simple_string_first.hpp
+	include/fslp/nav/string.hpp
 	include/fslp/slp.hpp
 	include/fslp/string_alg.hpp
 	include/fslp/string_alg_eval.hpp

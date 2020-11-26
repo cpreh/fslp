@@ -26,14 +26,18 @@ set(
 	include/fslp/base_fwd.hpp
 	include/fslp/compose.hpp
 	include/fslp/detail/make_fix.hpp
+	include/fslp/detail/make_slp.hpp
+	include/fslp/detail/rotations.hpp
 	include/fslp/fix.hpp
 	include/fslp/fix_fwd.hpp
+	include/fslp/fold.hpp
 	include/fslp/forest.hpp
 	include/fslp/forest_alg.hpp
 	include/fslp/forest_alg_eval.hpp
 	include/fslp/forest_alg_fix.hpp
 	include/fslp/forest_alg_t.hpp
 	include/fslp/forest_alg_x.hpp
+	include/fslp/forest_alg_x_eval.hpp
 	include/fslp/forest_alg_x_fix.hpp
 	include/fslp/forest_alg_x_t.hpp
 	include/fslp/forest_fix.hpp
@@ -44,6 +48,10 @@ set(
 	include/fslp/map.hpp
 	include/fslp/map_result.hpp
 	include/fslp/slp.hpp
+	include/fslp/string_alg.hpp
+	include/fslp/string_alg_eval.hpp
+	include/fslp/string_alg_fix.hpp
+	include/fslp/string_alg_t.hpp
 	include/fslp/tree.hpp
 	include/fslp/tree_fix.hpp
 	include/fslp/tree_t.hpp

@@ -1,4 +1,3 @@
-#include <fslp/clone.hpp>
 #include <fslp/nav/root.hpp>
 #include <fslp/nav/spine_alph.hpp>
 #include <fslp/nav/up.hpp>
@@ -26,6 +25,6 @@ TEST_CASE("vert nav","[fslp]")
       start,
       [] { CHECK(false); },
       [](fslp::nav::vert<Z, N> const &v) {
-        CHECK_FALSE(fslp::nav::up(fslp::clone(v)).has_value());
+        CHECK_FALSE(fslp::nav::up(v).has_value());
       });
 }

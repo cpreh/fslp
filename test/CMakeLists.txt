@@ -16,6 +16,7 @@ function(add_fslp_test PATH_NAME)
 endfunction()
 
 add_fslp_test(apply)
+add_fslp_test(clone)
 add_fslp_test(compose)
 add_fslp_test(forest)
 add_fslp_test(forest_alg_eval)

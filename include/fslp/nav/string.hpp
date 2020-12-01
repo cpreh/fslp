@@ -20,10 +20,10 @@ public:
   [[nodiscard]] virtual Ch cur() const = 0;
 
   [[nodiscard]] virtual fcppt::optional::object<fcppt::unique_ptr<fslp::nav::string<Ch>>>
-  next() && = 0;
+  next() const = 0;
 
   [[nodiscard]] virtual fcppt::optional::object<fcppt::unique_ptr<fslp::nav::string<Ch>>>
-  prev() && = 0;
+  prev() const = 0;
 
   [[nodiscard]] virtual fcppt::unique_ptr<fslp::nav::string<Ch>> clone() const = 0;
 };

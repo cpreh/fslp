@@ -2,6 +2,7 @@
 #define FSLP_MAP_RESULT_HPP_INCLUDED
 
 #include <fslp/base_fwd.hpp>
+#include <fslp/nonempty_fwd.hpp>
 #include <fcppt/container/tuple/map_result.hpp>
 #include <fcppt/metal/unique.hpp>
 #include <fcppt/variant/from_list_fwd.hpp>
@@ -53,6 +54,12 @@ template <typename F, typename T>
 struct map_result<F, std::vector<T>>
 {
   using type = std::vector<fslp::detail::map_result_t<F,T>>;
+};
+
+template <typename F, typename T>
+struct map_result<F, fslp::nonempty<T>>
+{
+  using type = fslp::nonempty<fslp::detail::map_result_t<F,T>>;
 };
 
 }

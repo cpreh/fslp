@@ -22,11 +22,10 @@ TEST_CASE("vert nav","[fslp]")
 
   fcppt::optional::object<fslp::nav::vert<Z, N>> start{fslp::nav::root(std::move(spine))};
 
-/*
   fcppt::optional::maybe(
       start,
       [] { CHECK(false); },
       [](fslp::nav::vert<Z, N> const &v) {
         CHECK_FALSE(fslp::nav::up(fslp::clone(v)).has_value());
-      });*/
+      });
 }

@@ -1,5 +1,8 @@
 #include <fslp/base.hpp>
+#include <fslp/make_nonempty.hpp>
+#include <fslp/nonempty_catch.hpp>
 #include <fslp/map.hpp>
+#include <fcppt/output_to_std_string.hpp>
 #include <fcppt/overload.hpp>
 #include <fcppt/widen.hpp>
 #include <fcppt/catch/variant.hpp>
@@ -48,4 +51,9 @@ TEST_CASE("fslp::map","[fslp]")
           [](std::string const &x) { return fcppt::widen(x); },
           variant2{std::make_tuple(std::string{"test"})}) ==
       variant2_r{std::make_tuple(std::wstring{L"test"})});
+
+  CHECK(
+      fslp::map(
+          [](int const i) { return fcppt::output_to_std_string(i); }, fslp::make_nonempty(4)) ==
+      fslp::make_nonempty(std::string{"4"}));
 }

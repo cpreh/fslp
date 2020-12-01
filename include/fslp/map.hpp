@@ -3,6 +3,7 @@
 
 #include <fslp/base_fwd.hpp>
 #include <fslp/map_result.hpp>
+#include <fslp/nonempty.hpp>
 #include <fcppt/algorithm/map.hpp>
 #include <fcppt/container/tuple/map.hpp>
 #include <fcppt/variant/apply.hpp>
@@ -45,6 +46,13 @@ fslp::map_result<F, std::vector<T>> map(F const &f, std::vector<T> const &v)
 {
   using result = fslp::map_result<F, std::vector<T>>;
   return fcppt::algorithm::map<result>(v, [&](auto const &i) { return fslp::map(f,i); });
+}
+
+template <typename F, typename T>
+fslp::map_result<F, fslp::nonempty<T>> map(F const &f, fslp::nonempty<T> const &v)
+{
+  using result = fslp::map_result<F,fslp::nonempty<T>>;
+  return result{fslp::map(f,v.front()), fslp::map(f,v.back())};
 }
 
 template <typename F, typename... Ts>

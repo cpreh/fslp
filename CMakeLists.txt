@@ -24,6 +24,7 @@ set(
 	include/fslp/apply.hpp
 	include/fslp/base.hpp
 	include/fslp/base_fwd.hpp
+	include/fslp/clone.hpp
 	include/fslp/compose.hpp
 	include/fslp/detail/make_fix.hpp
 	include/fslp/detail/make_slp.hpp
@@ -56,6 +57,7 @@ set(
 	include/fslp/nav/up.hpp
 	include/fslp/nav/vert.hpp
 	include/fslp/nonempty.hpp
+	include/fslp/nonempty_fwd.hpp
 	include/fslp/slp.hpp
 	include/fslp/string_alg.hpp
 	include/fslp/string_alg_eval.hpp

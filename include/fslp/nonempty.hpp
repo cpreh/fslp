@@ -1,6 +1,7 @@
 #ifndef FSLP_NONEMPTY_HPP_INCLUDED
 #define FSLP_NONEMPTY_HPP_INCLUDED
 
+#include <fslp/nonempty_fwd.hpp>
 #include <fcppt/container/make.hpp>
 #include <fcppt/optional/make_if.hpp>
 #include <fcppt/optional/object.hpp>

@@ -46,6 +46,13 @@ public:
           fcppt::make_unique_ptr<fslp::nav::simple_string<Ch>>(std::move(this->impl_), this->pos_ - 1U));
     });
   }
+
+  [[nodiscard]] fcppt::unique_ptr<fslp::nav::string<Ch>> clone() const override
+  {
+    return fcppt::unique_ptr_to_base<fslp::nav::string<Ch>>(
+        fcppt::make_unique_ptr<fslp::nav::simple_string<Ch>>(
+            std::vector<Ch>{this->impl_}, this->pos_));
+  }
 private:
   std::vector<Ch> impl_;
   pos_type pos_;

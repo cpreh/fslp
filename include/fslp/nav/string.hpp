@@ -24,6 +24,8 @@ public:
 
   [[nodiscard]] virtual fcppt::optional::object<fcppt::unique_ptr<fslp::nav::string<Ch>>>
   prev() && = 0;
+
+  [[nodiscard]] virtual fcppt::unique_ptr<fslp::nav::string<Ch>> clone() const = 0;
 };
 }
 

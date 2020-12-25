@@ -5,11 +5,11 @@
 #include <fslp/map_result.hpp>
 #include <fslp/nonempty.hpp>
 #include <fcppt/algorithm/map.hpp>
-#include <fcppt/container/tuple/map.hpp>
+#include <fcppt/tuple/map.hpp>
+#include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/apply.hpp>
 #include <fcppt/variant/object_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <tuple>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -31,7 +31,8 @@ template <typename F, typename T>
 fslp::map_result<F, std::vector<T>> map(F const &, std::vector<T> const &);
 
 template <typename F, typename... Ts>
-fslp::map_result<F, std::tuple<Ts...>> map(F const &, std::tuple<Ts...> const &);
+fslp::map_result<F, fcppt::tuple::object<Ts...>>
+map(F const &, fcppt::tuple::object<Ts...> const &);
 
 template <typename F, typename... Ts>
 fslp::map_result<F, fcppt::variant::object<Ts...>>
@@ -56,11 +57,11 @@ fslp::map_result<F, fslp::nonempty<T>> map(F const &f, fslp::nonempty<T> const &
 }
 
 template <typename F, typename... Ts>
-fslp::map_result<F, std::tuple<Ts...>> map(F const &f, std::tuple<Ts...> const &t)
+fslp::map_result<F, fcppt::tuple::object<Ts...>>
+map(F const &f, fcppt::tuple::object<Ts...> const &t)
 {
-  return fcppt::container::tuple::map(t, [&f](auto const &i) { return fslp::map(f,i); });
+  return fcppt::tuple::map(t, [&f](auto const &i) { return fslp::map(f, i); });
 }
-
 }
 
 #endif

@@ -7,10 +7,12 @@
 #include <fslp/slp.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/overload.hpp>
+#include <fcppt/tuple/get.hpp>
+#include <fcppt/tuple/make.hpp>
+#include <fcppt/tuple/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <metal.hpp>
-#include <tuple>
 #include <type_traits>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -39,19 +41,19 @@ using tree_N = tree_c<N2, N1>;
 
 static_assert(std::is_same_v<
               test_slp,
-              std::tuple<fcppt::function<forest_N(N1)>, fcppt::function<tree_N(N2)>>>);
+              fcppt::tuple::object<fcppt::function<forest_N(N1)>, fcppt::function<tree_N(N2)>>>);
 }
 
 TEST_CASE("fslp::fold slp", "[fslp]")
 {
-  test_slp const slp{std::make_tuple(
+  test_slp const slp{fcppt::tuple::make(
       fcppt::function<forest_N(N1)>{[](N1) { return forest_N{std::vector<N2>{}}; }},
       fcppt::function<tree_N(N2)>{
-          [](N2) { return tree_N{std::make_tuple(fslp::base{'a'}, N1::A)}; }})};
+          [](N2) { return tree_N{fcppt::tuple::make(fslp::base{'a'}, N1::A)}; }})};
 
   auto const eval{fcppt::overload(
-      [&slp](N1 const v) -> forest_N { return std::get<0>(slp)(v); },
-      [&slp](N2 const v) -> tree_N { return std::get<1>(slp)(v); })};
+      [&slp](N1 const v) -> forest_N { return fcppt::tuple::get<0>(slp)(v); },
+      [&slp](N2 const v) -> tree_N { return fcppt::tuple::get<1>(slp)(v); })};
 
   using forest = fslp::forest_fix<char>;
   using tree = fslp::tree_fix<char>;

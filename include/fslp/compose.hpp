@@ -7,10 +7,9 @@
 #include <fslp/tree_x_fix.hpp>
 #include <fslp/var.hpp>
 #include <fcppt/container/join.hpp>
+#include <fcppt/tuple/get.hpp>
+#include <fcppt/tuple/make.hpp>
 #include <fcppt/variant/match.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <tuple>
-#include <fcppt/config/external_end.hpp>
 
 namespace fslp
 {
@@ -21,7 +20,8 @@ fslp::forest_x_fix<Ch> compose(fslp::forest_x_fix<Ch> const &, fslp::forest_x_fi
 template <typename Ch>
 fslp::tree_x_fix<Ch> compose(fslp::tree_x_fix<Ch> const &x, fslp::forest_x_fix<Ch> const &f)
 {
-  return fslp::tree_x_fix<Ch>{std::make_tuple(std::get<0>(x.unfix()), fslp::compose<Ch>(std::get<1>(x.unfix()),f))};
+  return fslp::tree_x_fix<Ch>{fcppt::tuple::make(
+      fcppt::tuple::get<0>(x.unfix()), fslp::compose<Ch>(fcppt::tuple::get<1>(x.unfix()), f))};
 }
 
 template <typename Ch>
@@ -33,16 +33,21 @@ fslp::forest_x_fix<Ch> compose(fslp::forest_x_fix<Ch> const &x, fslp::forest_x_f
   using forest_x = fslp::forest_x_fix<Ch>;
 
   return fcppt::variant::match(
-      std::get<1>(x.unfix()),
-      [&x,&f](fslp::var) {
-        return forest_x{std::make_tuple(
-            forest{fcppt::container::join(std::get<0>(x.unfix()).unfix(), std::get<0>(f.unfix()).unfix())},
-            std::get<1>(f.unfix()),
-            forest{fcppt::container::join(std::get<2>(f.unfix()).unfix(), std::get<2>(x.unfix()).unfix())})};
+      fcppt::tuple::get<1>(x.unfix()),
+      [&x, &f](fslp::var) {
+        return forest_x{fcppt::tuple::make(
+            forest{fcppt::container::join(
+                fcppt::tuple::get<0>(x.unfix()).unfix(), fcppt::tuple::get<0>(f.unfix()).unfix())},
+            fcppt::tuple::get<1>(f.unfix()),
+            forest{fcppt::container::join(
+                fcppt::tuple::get<2>(f.unfix()).unfix(),
+                fcppt::tuple::get<2>(x.unfix()).unfix())})};
       },
-      [&x,&f](tree_x const &t) {
-        return forest_x{std::make_tuple(
-            std::get<0>(x.unfix()), forest_r{fslp::compose<Ch>(t, f)}, std::get<2>(x.unfix()))};
+      [&x, &f](tree_x const &t) {
+        return forest_x{fcppt::tuple::make(
+            fcppt::tuple::get<0>(x.unfix()),
+            forest_r{fslp::compose<Ch>(t, f)},
+            fcppt::tuple::get<2>(x.unfix()))};
       });
 }
 }

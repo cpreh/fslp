@@ -6,9 +6,9 @@
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_x_fix.hpp>
 #include <fslp/var.hpp>
+#include <fcppt/tuple/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
-#include <tuple>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -23,9 +23,10 @@ TEST_CASE("fslp::forest_alg_x_eval","[fslp]")
   using forest_alg_x_t = fslp::forest_alg_x_t<char,forest_x,forest>;
 
   forest const e{std::vector<tree>{}};
-  forest_x const i{std::make_tuple(e, forest_x_r{fslp::var{}}, e)};
+  forest_x const i{fcppt::tuple::make(e, forest_x_r{fslp::var{}}, e)};
 
   CHECK(
-      fslp::forest_alg_x_eval<char>(forest_alg_x_t{std::make_tuple(fslp::base{'a'}, e, e)}) ==
-      forest_x{std::make_tuple(e, forest_x_r{tree_x{std::make_tuple(fslp::base{'a'}, i)}}, e)});
+      fslp::forest_alg_x_eval<char>(forest_alg_x_t{fcppt::tuple::make(fslp::base{'a'}, e, e)}) ==
+      forest_x{
+          fcppt::tuple::make(e, forest_x_r{tree_x{fcppt::tuple::make(fslp::base{'a'}, i)}}, e)});
 }

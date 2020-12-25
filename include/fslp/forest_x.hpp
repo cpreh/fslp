@@ -3,9 +3,7 @@
 
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_x_r.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <tuple>
-#include <fcppt/config/external_end.hpp>
+#include <fcppt/tuple/object.hpp>
 
 namespace fslp
 {
@@ -14,7 +12,7 @@ struct forest_x
 {
   template <typename F, typename T>
   using type =
-      std::tuple<fslp::forest_fix<Ch>, fslp::forest_x_r<T>, fslp::forest_fix<Ch>>;
+      fcppt::tuple::object<fslp::forest_fix<Ch>, fslp::forest_x_r<T>, fslp::forest_fix<Ch>>;
 };
 }
 

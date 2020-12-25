@@ -1,8 +1,9 @@
 #include <fslp/forest_fix.hpp>
 #include <fslp/tree_fix.hpp>
+#include <fcppt/tuple/get.hpp>
+#include <fcppt/tuple/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
-#include <tuple>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -15,11 +16,11 @@ TEST_CASE("fslp::forest","[fslp]")
 
   CHECK(e.unfix().empty());
 
-  tree const t{std::make_tuple(fslp::base{'a'},e)};
+  tree const t{fcppt::tuple::make(fslp::base{'a'},e)};
 
-  CHECK(std::get<0>(t.unfix()).get() == 'a');
+  CHECK(fcppt::tuple::get<0>(t.unfix()).get() == 'a');
 
   forest const tt{std::vector<tree>{t,t}};
 
-  CHECK(std::get<0>(tt.unfix().at(0U).unfix()).get() == 'a');
+  CHECK(fcppt::tuple::get<0>(tt.unfix().at(0U).unfix()).get() == 'a');
 }

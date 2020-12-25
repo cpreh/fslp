@@ -3,12 +3,12 @@
 
 #include <fslp/base_fwd.hpp>
 #include <fslp/nonempty_fwd.hpp>
-#include <fcppt/container/tuple/map_result.hpp>
 #include <fcppt/metal/unique.hpp>
+#include <fcppt/tuple/object_fwd.hpp>
+#include <fcppt/tuple/map_result.hpp>
 #include <fcppt/variant/from_list_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <metal.hpp>
-#include <tuple>
 #include <type_traits>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -33,14 +33,14 @@ struct map_result<F, fslp::base<T>>
 };
 
 template <typename F, typename... Ts>
-struct map_result<F, std::tuple<Ts...>>
+struct map_result<F, fcppt::tuple::object<Ts...>>
 {
   struct map_inner
   {
     template <typename T>
     fslp::detail::map_result_t<F, T> operator()(T);
   };
-  using type = fcppt::container::tuple::map_result<std::tuple<Ts...>,map_inner>;
+  using type = fcppt::tuple::map_result<fcppt::tuple::object<Ts...>,map_inner>;
 };
 
 template <typename F, typename... Ts>

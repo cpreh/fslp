@@ -14,12 +14,14 @@
 #include <fcppt/overload.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/algorithm/fold.hpp>
+#include <fcppt/tuple/get.hpp>
+#include <fcppt/tuple/make.hpp>
+#include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <metal.hpp>
 #include <functional>
-#include <tuple>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -30,13 +32,13 @@ TEST_CASE("fslp::unfold forest", "[fslp]")
 
   auto const size{fcppt::overload(
       [](forest_i const &f) -> int { return fcppt::algorithm::fold(f, 0, std::plus<int>{}); },
-      [](tree_i const &t) -> int { return 1 + std::get<1>(t); })};
+      [](tree_i const &t) -> int { return 1 + fcppt::tuple::get<1>(t); })};
 
   using forest = fslp::forest_fix<char>;
   using tree = fslp::tree_fix<char>;
 
   forest const e{std::vector<tree>{}};
-  tree const t{std::make_tuple(fslp::base{'a'}, e)};
+  tree const t{fcppt::tuple::make(fslp::base{'a'}, e)};
   forest const tt{std::vector<tree>{t, t}};
 
   using types = metal::map<metal::pair<forest, int>, metal::pair<tree, int>>;
@@ -85,7 +87,7 @@ template <typename T1, typename T2>
 using test1 = fcppt::variant::object<fslp::base<int>, T2>;
 
 template <typename T2, typename T1>
-using test2 = std::tuple<fslp::base<char>, std::vector<T1>>;
+using test2 = fcppt::tuple::object<fslp::base<char>, std::vector<T1>>;
 
 }
 
@@ -100,7 +102,7 @@ TEST_CASE("fslp::unfold two types", "[fslp]")
       [](test1<S1, S2> const &) -> S1 { return S1{}; },
       [](test2<S2, S1> const &) -> S2 { return S2{}; })};
 
-  test_fix_2 const i{test_2_t{std::make_tuple(fslp::base{'c'}, std::vector<test_fix_1>{})}};
+  test_fix_2 const i{test_2_t{fcppt::tuple::make(fslp::base{'c'}, std::vector<test_fix_1>{})}};
   test_fix_1 const e{test_1_t{i}};
 
   using types = metal::map<metal::pair<test_fix_1, S1>, metal::pair<test_fix_2, S2>>;

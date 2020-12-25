@@ -5,9 +5,10 @@
 #include <fslp/string_alg_t.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/container/join.hpp>
+#include <fcppt/tuple/get.hpp>
+#include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/match.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <tuple>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
@@ -20,8 +21,8 @@ std::vector<Ch> string_alg_eval(fslp::string_alg_t<Ch, std::vector<Ch>> const &v
       v,
       [](fslp::base<fcppt::unit>) { return std::vector<Ch>{}; },
       [](fslp::base<Ch> const &x) { return std::vector<Ch>{x.get()}; },
-      [](std::tuple<std::vector<Ch>, std::vector<Ch>> const &x) {
-        return fcppt::container::join(std::get<0>(x), std::get<1>(x));
+      [](fcppt::tuple::object<std::vector<Ch>, std::vector<Ch>> const &x) {
+        return fcppt::container::join(fcppt::tuple::get<0>(x), fcppt::tuple::get<1>(x));
       });
 }
 }

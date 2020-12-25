@@ -9,6 +9,9 @@
 #include <fslp/tree.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fcppt/container/join.hpp>
+#include <fcppt/tuple/get.hpp>
+#include <fcppt/tuple/make.hpp>
+#include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/match.hpp>
 
 namespace fslp
@@ -24,14 +27,16 @@ forest_alg_eval(fslp::forest_alg_t<Ch, fslp::forest_fix<Ch>, fslp::forest_x_fix<
   return fcppt::variant::match(
       v,
       [](fslp::base<fcppt::unit>) { return forest{std::vector<tree>{}}; },
-      [](std::tuple<forest, forest> const &r) {
-        return forest{fcppt::container::join(std::get<0>(r).unfix(), std::get<1>(r).unfix())};
+      [](fcppt::tuple::object<forest, forest> const &r) {
+        return forest{fcppt::container::join(
+            fcppt::tuple::get<0>(r).unfix(), fcppt::tuple::get<1>(r).unfix())};
       },
-      [](std::tuple<forest_x, forest> const &r) {
-        return fslp::apply<Ch>(std::get<0>(r), std::get<1>(r));
+      [](fcppt::tuple::object<forest_x, forest> const &r) {
+        return fslp::apply<Ch>(fcppt::tuple::get<0>(r), fcppt::tuple::get<1>(r));
       },
-      [](std::tuple<fslp::base<Ch>, forest> const &r) {
-        return forest{std::vector<tree>{tree{std::make_tuple(std::get<0>(r), std::get<1>(r))}}};
+      [](fcppt::tuple::object<fslp::base<Ch>, forest> const &r) {
+        return forest{std::vector<tree>{
+            tree{fcppt::tuple::make(fcppt::tuple::get<0>(r), fcppt::tuple::get<1>(r))}}};
       });
 }
 

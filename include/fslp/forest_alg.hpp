@@ -3,10 +3,8 @@
 
 #include <fslp/base.hpp>
 #include <fcppt/unit.hpp>
+#include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/object.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <tuple>
-#include <fcppt/config/external_end.hpp>
 
 namespace fslp
 {
@@ -17,9 +15,9 @@ struct forest_alg
   template <typename R, typename Rx>
   using type = fcppt::variant::object<
       fslp::base<fcppt::unit>,
-      std::tuple<R, R>,
-      std::tuple<Rx, R>,
-      std::tuple<fslp::base<Ch>, R>>;
+      fcppt::tuple::object<R, R>,
+      fcppt::tuple::object<Rx, R>,
+      fcppt::tuple::object<fslp::base<Ch>, R>>;
 };
 
 }

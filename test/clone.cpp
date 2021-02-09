@@ -14,11 +14,11 @@ class test
 public:
   explicit test(int const _i) : i_{_i} {}
 
-  fcppt::unique_ptr<test> clone() const
+  [[nodiscard]] fcppt::unique_ptr<test> clone() const
   {
     return fcppt::make_unique_ptr<test>(this->i_);
   }
-  int value() const { return i_; }
+  [[nodiscard]] int value() const { return i_; }
 private:
   int const i_;
 };

@@ -4,7 +4,6 @@
 #include <fslp/fix_fwd.hpp>
 #include <fslp/detail/make_fix.hpp>
 #include <fcppt/recursive.hpp>
-#include <fcppt/type_traits/remove_cv_ref_t.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <type_traits>
 #include <utility>
@@ -19,7 +18,7 @@ class fix
 public:
   using rec = typename fslp::detail::make_fix<Cs...>::type;
 
-  template<typename U, typename = std::enable_if_t<std::is_same_v<fcppt::type_traits::remove_cv_ref_t<U>,rec>>>
+  template<typename U, typename = std::enable_if_t<std::is_same_v<std::remove_cvref_t<U>,rec>>>
   explicit fix(U &&_val) : v{std::forward<U>(_val)} {}
 
   [[nodiscard]] rec const &unfix() const { return v.get(); }

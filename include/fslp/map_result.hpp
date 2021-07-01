@@ -3,12 +3,12 @@
 
 #include <fslp/base_fwd.hpp>
 #include <fslp/nonempty_fwd.hpp>
-#include <fcppt/metal/unique.hpp>
+#include <fcppt/mpl/list/object.hpp>
+#include <fcppt/mpl/list/unique.hpp>
 #include <fcppt/tuple/object_fwd.hpp>
 #include <fcppt/tuple/map_result.hpp>
 #include <fcppt/variant/from_list_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <metal.hpp>
 #include <type_traits>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -46,8 +46,8 @@ struct map_result<F, fcppt::tuple::object<Ts...>>
 template <typename F, typename... Ts>
 struct map_result<F, fcppt::variant::object<Ts...>>
 {
-  using inner_types = ::metal::list<fslp::detail::map_result_t<F,Ts>...>;
-  using type = fcppt::variant::from_list<fcppt::metal::unique<inner_types>>;
+  using inner_types = fcppt::mpl::list::object<fslp::detail::map_result_t<F,Ts>...>;
+  using type = fcppt::variant::from_list<fcppt::mpl::list::unique<inner_types>>;
 };
 
 template <typename F, typename T>

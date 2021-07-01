@@ -3,9 +3,10 @@
 
 #include <fslp/fix_fwd.hpp>
 #include <fslp/detail/rotations.hpp>
-#include <fcppt/config/external_begin.hpp>
-#include <metal.hpp>
-#include <fcppt/config/external_end.hpp>
+#include <fcppt/mpl/lambda.hpp>
+#include <fcppt/mpl/list/apply.hpp>
+#include <fcppt/mpl/list/map.hpp>
+#include <fcppt/mpl/list/object.hpp>
 
 namespace fslp
 {
@@ -18,7 +19,7 @@ struct make_fix
   struct apply_fix_impl;
 
   template <template <typename...> class... Ts>
-  struct apply_fix_impl<::metal::list<::metal::lambda<Ts>...>>
+  struct apply_fix_impl<fcppt::mpl::list::object<fcppt::mpl::lambda<Ts>...>>
   {
     using type = fix<Ts...>;
   };
@@ -26,9 +27,9 @@ struct make_fix
   template <typename L>
   using apply_fix = typename apply_fix_impl<L>::type;
 
-  using constructors = metal::list<metal::lambda<C1>, metal::lambda<Cs>...>;
-  using arguments = metal::transform<metal::lambda<apply_fix>, fslp::detail::rotations<constructors>>;
-  using type = metal::apply<metal::lambda<C1>, arguments>;
+  using constructors = fcppt::mpl::list::object<fcppt::mpl::lambda<C1>, fcppt::mpl::lambda<Cs>...>;
+  using arguments = fcppt::mpl::list::map<fslp::detail::rotations<constructors>, fcppt::mpl::lambda<apply_fix>>;
+  using type = fcppt::mpl::list::apply<fcppt::mpl::lambda<C1>, arguments>;
 };
 
 }

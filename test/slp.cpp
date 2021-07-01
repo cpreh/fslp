@@ -7,12 +7,13 @@
 #include <fslp/slp.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/overload.hpp>
+#include <fcppt/mpl/map/element.hpp>
+#include <fcppt/mpl/map/object.hpp>
 #include <fcppt/tuple/get.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/tuple/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
-#include <metal.hpp>
 #include <type_traits>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -58,6 +59,7 @@ TEST_CASE("fslp::fold slp", "[fslp]")
   using forest = fslp::forest_fix<char>;
   using tree = fslp::tree_fix<char>;
 
-  using types = metal::map<metal::pair<N1, forest>, metal::pair<N2, tree>>;
+  using types = fcppt::mpl::map::
+      object<fcppt::mpl::map::element<N1, forest>, fcppt::mpl::map::element<N2, tree>>;
   CHECK(fslp::fold<types>(N1::A, eval) == forest{std::vector<tree>{}});
 }

@@ -14,13 +14,14 @@
 #include <fcppt/overload.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/algorithm/fold.hpp>
+#include <fcppt/mpl/map/element.hpp>
+#include <fcppt/mpl/map/object.hpp>
 #include <fcppt/tuple/get.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
-#include <metal.hpp>
 #include <functional>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
@@ -41,7 +42,8 @@ TEST_CASE("fslp::unfold forest", "[fslp]")
   tree const t{fcppt::tuple::make(fslp::base{'a'}, e)};
   forest const tt{std::vector<tree>{t, t}};
 
-  using types = metal::map<metal::pair<forest, int>, metal::pair<tree, int>>;
+  using types = fcppt::mpl::map::
+      object<fcppt::mpl::map::element<forest, int>, fcppt::mpl::map::element<tree, int>>;
 
   CHECK(fslp::unfold<types>(tt, size) == 2);
 }
@@ -68,8 +70,9 @@ TEST_CASE("fslp::unfold forest_alg", "[fslp]")
 
   forest const fe{std::vector<tree>{}};
 
-  using types =
-      metal::map<metal::pair<forest_alg_fix, forest>, metal::pair<forest_alg_x_fix, forest_x>>;
+  using types = fcppt::mpl::map::object<
+      fcppt::mpl::map::element<forest_alg_fix, forest>,
+      fcppt::mpl::map::element<forest_alg_x_fix, forest_x>>;
   CHECK(fslp::unfold<types>(e, func) == fe);
 }
 
@@ -105,7 +108,8 @@ TEST_CASE("fslp::unfold two types", "[fslp]")
   test_fix_2 const i{test_2_t{fcppt::tuple::make(fslp::base{'c'}, std::vector<test_fix_1>{})}};
   test_fix_1 const e{test_1_t{i}};
 
-  using types = metal::map<metal::pair<test_fix_1, S1>, metal::pair<test_fix_2, S2>>;
+  using types = fcppt::mpl::map::
+      object<fcppt::mpl::map::element<test_fix_1, S1>, fcppt::mpl::map::element<test_fix_2, S2>>;
 
   CHECK(fslp::unfold<types>(e, func) == S1{});
 }

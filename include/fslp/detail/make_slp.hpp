@@ -9,9 +9,7 @@
 #include <fcppt/mpl/list/object.hpp>
 #include <fslp/detail/rotations.hpp>
 
-namespace fslp
-{
-namespace detail
+namespace fslp::detail
 {
 
 template<typename Ns, template<typename...> class... Cs>
@@ -29,7 +27,6 @@ struct make_slp
   using type = fcppt::mpl::list::as_tuple<func_types>;
 };
 
-}
 }
 
 #endif

@@ -11,9 +11,7 @@
 #include <fcppt/mpl/list/map.hpp>
 #include <fcppt/mpl/list/take.hpp>
 
-namespace fslp
-{
-namespace detail
+namespace fslp::detail
 {
 
 template<typename List>
@@ -33,7 +31,6 @@ struct rotations_impl
 template<typename List>
 using rotations = typename fslp::detail::rotations_impl<List>::type;
 
-}
 }
 
 #endif

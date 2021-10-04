@@ -8,9 +8,7 @@
 #include <fcppt/mpl/list/map.hpp>
 #include <fcppt/mpl/list/object.hpp>
 
-namespace fslp
-{
-namespace detail
+namespace fslp::detail
 {
 template <template <typename...> class C1, template <typename...> class... Cs>
 struct make_fix
@@ -32,7 +30,6 @@ struct make_fix
   using type = fcppt::mpl::list::apply<fcppt::mpl::lambda<C1>, arguments>;
 };
 
-}
 }
 
 #endif

@@ -6,10 +6,14 @@
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_x_fix.hpp>
 #include <fslp/var.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <fcppt/config/external_end.hpp>
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("fslp::apply","[fslp]")
 {
@@ -24,3 +28,5 @@ TEST_CASE("fslp::apply","[fslp]")
 
   CHECK(fslp::apply<char>(forest_x{fcppt::tuple::make(e, forest_x_r{fslp::var{}}, e)}, e) == e);
 }
+
+FCPPT_CATCH_END

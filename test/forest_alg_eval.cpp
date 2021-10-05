@@ -3,11 +3,15 @@
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_x_fix.hpp>
 #include <fslp/tree_fix.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("fslp::forest_alg_eval","[fslp]")
 {
@@ -20,3 +24,5 @@ TEST_CASE("fslp::forest_alg_eval","[fslp]")
 
   CHECK(fslp::forest_alg_eval<char>(forest_alg_t{fslp::base{fcppt::unit{}}}) == e);
 }
+
+FCPPT_CATCH_END

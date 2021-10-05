@@ -1,6 +1,8 @@
 #include <fslp/clone.hpp>
 #include <fcppt/make_unique_ptr.hpp>
 #include <fcppt/unique_ptr_impl.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/container/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
@@ -24,6 +26,8 @@ private:
 };
 }
 
+FCPPT_CATCH_BEGIN
+
 TEST_CASE("fslp::clone", "[fslp]")
 {
   CHECK(fslp::clone(fcppt::make_unique_ptr<test>(42))->value() == 42);
@@ -33,3 +37,5 @@ TEST_CASE("fslp::clone", "[fslp]")
       fcppt::container::make<ptr_vector>(
           fcppt::make_unique_ptr<test>(2), fcppt::make_unique_ptr<test>(3))};
 }
+
+FCPPT_CATCH_END

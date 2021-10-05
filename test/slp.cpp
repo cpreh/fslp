@@ -2,11 +2,13 @@
 #include <fslp/fold.hpp>
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_t.hpp>
+#include <fslp/slp.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_t.hpp>
-#include <fslp/slp.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/overload.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/mpl/map/element.hpp>
 #include <fcppt/mpl/map/object.hpp>
 #include <fcppt/tuple/get.hpp>
@@ -45,6 +47,8 @@ static_assert(std::is_same_v<
               fcppt::tuple::object<fcppt::function<forest_N(N1)>, fcppt::function<tree_N(N2)>>>);
 }
 
+FCPPT_CATCH_BEGIN
+
 TEST_CASE("fslp::fold slp", "[fslp]")
 {
   test_slp const slp{fcppt::tuple::make(
@@ -63,3 +67,5 @@ TEST_CASE("fslp::fold slp", "[fslp]")
       object<fcppt::mpl::map::element<N1, forest>, fcppt::mpl::map::element<N2, tree>>;
   CHECK(fslp::fold<types>(N1::A, eval) == forest{std::vector<tree>{}});
 }
+
+FCPPT_CATCH_END

@@ -3,6 +3,8 @@
 #include <fslp/forest_x_r.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_x_fix.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/tuple/get.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/variant/match.hpp>
@@ -11,6 +13,8 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("fslp::forest_x","[fslp]")
 {
@@ -40,3 +44,5 @@ TEST_CASE("fslp::forest_x","[fslp]")
         CHECK(v == xt);
       });
 }
+
+FCPPT_CATCH_END

@@ -1,11 +1,15 @@
 #include <fslp/forest_fix.hpp>
 #include <fslp/tree_fix.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/tuple/get.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("fslp::forest","[fslp]")
 {
@@ -24,3 +28,5 @@ TEST_CASE("fslp::forest","[fslp]")
 
   CHECK(fcppt::tuple::get<0>(tt.unfix().at(0U).unfix()).get() == 'a');
 }
+
+FCPPT_CATCH_END

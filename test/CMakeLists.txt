@@ -10,6 +10,7 @@ function(add_fslp_test PATH_NAME)
 		"${PATH_NAME}"
 		LINK_LIBS
 			fslp_interface
+			fcppt_catch_interface
 			fcppt_core_interface
 			${_LINK_LIBS}
 	)

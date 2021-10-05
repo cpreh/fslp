@@ -2,6 +2,8 @@
 #include <fslp/nav/spine_alph.hpp>
 #include <fslp/nav/up.hpp>
 #include <fslp/nav/vert.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/optional/maybe.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/tuple/make.hpp>
@@ -10,6 +12,8 @@
 #include <utility>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("vert nav","[fslp]")
 {
@@ -28,3 +32,5 @@ TEST_CASE("vert nav","[fslp]")
         CHECK_FALSE(fslp::nav::up(v).has_value());
       });
 }
+
+FCPPT_CATCH_END

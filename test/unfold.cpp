@@ -14,6 +14,8 @@
 #include <fcppt/overload.hpp>
 #include <fcppt/unit.hpp>
 #include <fcppt/algorithm/fold.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/mpl/map/element.hpp>
 #include <fcppt/mpl/map/object.hpp>
 #include <fcppt/tuple/get.hpp>
@@ -25,6 +27,8 @@
 #include <functional>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("fslp::unfold forest", "[fslp]")
 {
@@ -113,3 +117,5 @@ TEST_CASE("fslp::unfold two types", "[fslp]")
 
   CHECK(fslp::unfold<types>(e, func) == S1{});
 }
+
+FCPPT_CATCH_END

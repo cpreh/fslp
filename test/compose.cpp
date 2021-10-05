@@ -5,12 +5,16 @@
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_x_fix.hpp>
 #include <fslp/var.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch.hpp>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("fslp::compose","[fslp]")
 {
@@ -25,3 +29,5 @@ TEST_CASE("fslp::compose","[fslp]")
 
   CHECK(fslp::compose<char>(x,x) == x);
 }
+
+FCPPT_CATCH_END

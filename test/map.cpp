@@ -1,10 +1,12 @@
 #include <fslp/base.hpp>
 #include <fslp/make_nonempty.hpp>
-#include <fslp/nonempty_catch.hpp>
 #include <fslp/map.hpp>
+#include <fslp/nonempty_catch.hpp>
 #include <fcppt/output_to_std_string.hpp>
 #include <fcppt/overload.hpp>
 #include <fcppt/widen.hpp>
+#include <fcppt/catch/begin.hpp>
+#include <fcppt/catch/end.hpp>
 #include <fcppt/catch/tuple.hpp>
 #include <fcppt/catch/variant.hpp>
 #include <fcppt/tuple/make.hpp>
@@ -15,6 +17,8 @@
 #include <string>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
+
+FCPPT_CATCH_BEGIN
 
 TEST_CASE("fslp::map","[fslp]")
 {
@@ -61,3 +65,5 @@ TEST_CASE("fslp::map","[fslp]")
           [](int const i) { return fcppt::output_to_std_string(i); }, fslp::make_nonempty(4)) ==
       fslp::make_nonempty(std::string{"4"}));
 }
+
+FCPPT_CATCH_END

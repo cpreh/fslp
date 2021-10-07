@@ -1,13 +1,13 @@
 #ifndef FSLP_DETAIL_MAKE_SLP_HPP_INCLUDED
 #define FSLP_DETAIL_MAKE_SLP_HPP_INCLUDED
 
+#include <fslp/detail/rotations.hpp>
 #include <fcppt/function_impl.hpp>
 #include <fcppt/mpl/lambda.hpp>
 #include <fcppt/mpl/list/apply.hpp>
 #include <fcppt/mpl/list/as_tuple.hpp>
 #include <fcppt/mpl/list/map_multi.hpp>
 #include <fcppt/mpl/list/object.hpp>
-#include <fslp/detail/rotations.hpp>
 
 namespace fslp::detail
 {

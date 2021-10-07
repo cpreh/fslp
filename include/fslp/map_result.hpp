@@ -5,8 +5,8 @@
 #include <fslp/nonempty_fwd.hpp>
 #include <fcppt/mpl/list/object.hpp>
 #include <fcppt/mpl/list/unique.hpp>
-#include <fcppt/tuple/object_fwd.hpp>
 #include <fcppt/tuple/map_result.hpp>
+#include <fcppt/tuple/object_fwd.hpp>
 #include <fcppt/variant/from_list_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <type_traits>

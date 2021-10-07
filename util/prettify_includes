@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+LIBS=(--library fslp --library fcppt)
+DIRS=(include test)
+
+prettify_includes "${LIBS[@]}" "${DIRS[@]}"

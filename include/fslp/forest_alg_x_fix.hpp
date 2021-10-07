@@ -2,8 +2,8 @@
 #define FSLP_FOREST_ALG_X_FIX_HPP_INCLUDED
 
 #include <fslp/fix.hpp>
-#include <fslp/forest_alg_x.hpp>
 #include <fslp/forest_alg.hpp>
+#include <fslp/forest_alg_x.hpp>
 
 namespace fslp
 {

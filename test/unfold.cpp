@@ -23,7 +23,7 @@
 #include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/object.hpp>
 #include <fcppt/config/external_begin.hpp>
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <functional>
 #include <vector>
 #include <fcppt/config/external_end.hpp>

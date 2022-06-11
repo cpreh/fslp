@@ -6,6 +6,12 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 find_package(fcppt REQUIRED)
 
+set(
+	FCPPT_UTILS_CLANG_TIDY_WHITELIST
+	"fcppt"
+	"fslp"
+)
+
 include(FcpptCMakeUtils)
 
 fcppt_utils_static_shared()

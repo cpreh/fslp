@@ -10,8 +10,8 @@
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
-
 FCPPT_CATCH_BEGIN
+// NOLINTBEGIN(misc-const-correctness,cert-err58-cpp,fuchsia-statically-constructed-objects,misc-use-anonymous-namespace,cppcoreguidelines-avoid-do-while)
 
 TEST_CASE("fslp::forest_alg_eval","[fslp]")
 {
@@ -25,4 +25,5 @@ TEST_CASE("fslp::forest_alg_eval","[fslp]")
   CHECK(fslp::forest_alg_eval<char>(forest_alg_t{fslp::base{fcppt::unit{}}}) == e);
 }
 
+// NOLINTEND(misc-const-correctness,cert-err58-cpp,fuchsia-statically-constructed-objects,misc-use-anonymous-namespace,cppcoreguidelines-avoid-do-while)
 FCPPT_CATCH_END

@@ -1,8 +1,10 @@
+#include <fslp/base.hpp>
 #include <fslp/forest_alg_eval.hpp>
 #include <fslp/forest_alg_t.hpp>
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_x_fix.hpp>
 #include <fslp/tree_fix.hpp>
+#include <fcppt/unit.hpp>
 #include <fcppt/catch/begin.hpp>
 #include <fcppt/catch/end.hpp>
 #include <fcppt/config/external_begin.hpp>

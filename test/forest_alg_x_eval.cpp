@@ -1,3 +1,4 @@
+#include <fslp/base.hpp>
 #include <fslp/forest_alg_x_eval.hpp>
 #include <fslp/forest_alg_x_t.hpp>
 #include <fslp/forest_fix.hpp>

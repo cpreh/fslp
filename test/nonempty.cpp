@@ -1,6 +1,6 @@
 #include <fslp/make_nonempty.hpp>
 #include <fslp/nonempty.hpp>
-#include <fslp/nonempty_catch.hpp>
+#include <fslp/nonempty_catch.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/catch/begin.hpp>
 #include <fcppt/catch/end.hpp>
 #include <fcppt/config/external_begin.hpp>

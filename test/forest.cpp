@@ -1,3 +1,4 @@
+#include <fslp/base.hpp>
 #include <fslp/forest_fix.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fcppt/catch/begin.hpp>

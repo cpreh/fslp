@@ -1,8 +1,10 @@
+#include <fslp/base.hpp>
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_x_fix.hpp>
 #include <fslp/forest_x_r.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_x_fix.hpp>
+#include <fslp/var.hpp>
 #include <fcppt/catch/begin.hpp>
 #include <fcppt/catch/end.hpp>
 #include <fcppt/tuple/get.hpp>

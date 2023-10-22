@@ -1,14 +1,14 @@
 #include <fslp/base.hpp>
 #include <fslp/make_nonempty.hpp>
 #include <fslp/map.hpp>
-#include <fslp/nonempty_catch.hpp>
+#include <fslp/nonempty_catch.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/output_to_std_string.hpp>
 #include <fcppt/overload.hpp>
 #include <fcppt/widen.hpp>
 #include <fcppt/catch/begin.hpp>
 #include <fcppt/catch/end.hpp>
-#include <fcppt/catch/tuple.hpp>
-#include <fcppt/catch/variant.hpp>
+#include <fcppt/catch/tuple.hpp> // NOLINT(misc-include-cleaner)
+#include <fcppt/catch/variant.hpp> // NOLINT(misc-include-cleaner)
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/object.hpp>

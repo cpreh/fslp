@@ -1,4 +1,5 @@
 #include <fslp/base.hpp>
+#include <fslp/fix.hpp>
 #include <fslp/forest_alg_eval.hpp>
 #include <fslp/forest_alg_fix.hpp>
 #include <fslp/forest_alg_t.hpp>
@@ -7,7 +8,7 @@
 #include <fslp/forest_alg_x_t.hpp>
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_t.hpp>
-#include <fslp/forest_x.hpp>
+#include <fslp/forest_x_fix.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_t.hpp>
 #include <fslp/unfold.hpp>

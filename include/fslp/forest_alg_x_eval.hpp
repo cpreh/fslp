@@ -7,7 +7,6 @@
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_x_fix.hpp>
 #include <fslp/forest_x_r.hpp>
-#include <fslp/tree.hpp>
 #include <fslp/tree_fix.hpp>
 #include <fslp/tree_x_fix.hpp>
 #include <fslp/var.hpp>
@@ -15,6 +14,9 @@
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/match.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <vector>
+#include <fcppt/config/external_end.hpp>
 
 namespace fslp
 {

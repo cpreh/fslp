@@ -2,7 +2,7 @@
 #define FSLP_STRING_ALG_FIX_HPP_INCLUDED
 
 #include <fslp/fix.hpp>
-#include <fslp/string_alg.hpp>
+#include <fslp/string_alg.hpp> // IWYU pragma: keep
 
 namespace fslp
 {

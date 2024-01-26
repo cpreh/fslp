@@ -1,7 +1,6 @@
 #ifndef FSLP_FOLD_HPP_INCLUDED
 #define FSLP_FOLD_HPP_INCLUDED
 
-#include <fslp/fix.hpp>
 #include <fslp/map.hpp>
 #include <fcppt/mpl/map/at.hpp>
 

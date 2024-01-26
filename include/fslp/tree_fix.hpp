@@ -2,8 +2,8 @@
 #define FSLP_TREE_FIX_HPP_INCLUDED
 
 #include <fslp/fix.hpp>
-#include <fslp/forest.hpp>
-#include <fslp/tree.hpp>
+#include <fslp/forest.hpp> // IWYU pragma: keep
+#include <fslp/tree.hpp> // IWYU pragma: keep
 
 namespace fslp
 {

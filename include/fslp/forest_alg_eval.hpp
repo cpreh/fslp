@@ -6,13 +6,16 @@
 #include <fslp/forest_alg_t.hpp>
 #include <fslp/forest_fix.hpp>
 #include <fslp/forest_x_fix.hpp>
-#include <fslp/tree.hpp>
 #include <fslp/tree_fix.hpp>
+#include <fcppt/unit.hpp>
 #include <fcppt/container/join.hpp>
 #include <fcppt/tuple/get.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/tuple/object.hpp>
 #include <fcppt/variant/match.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <vector>
+#include <fcppt/config/external_end.hpp>
 
 namespace fslp
 {

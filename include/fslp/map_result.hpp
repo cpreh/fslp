@@ -8,6 +8,7 @@
 #include <fcppt/tuple/map_result.hpp>
 #include <fcppt/tuple/object_fwd.hpp>
 #include <fcppt/variant/from_list_fwd.hpp>
+#include <fcppt/variant/object_fwd.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <type_traits>
 #include <vector>

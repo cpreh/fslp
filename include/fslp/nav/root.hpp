@@ -4,7 +4,9 @@
 #include <fslp/make_nonempty.hpp>
 #include <fslp/nav/simple_string_first.hpp>
 #include <fslp/nav/spine_alph.hpp>
+#include <fslp/nav/string.hpp>
 #include <fslp/nav/vert.hpp>
+#include <fcppt/unique_ptr.hpp>
 #include <fcppt/optional/map.hpp>
 #include <fcppt/optional/object.hpp>
 #include <fcppt/config/external_begin.hpp>

@@ -10,6 +10,9 @@
 #include <fcppt/tuple/get.hpp>
 #include <fcppt/tuple/make.hpp>
 #include <fcppt/variant/match.hpp>
+#include <fcppt/config/external_begin.hpp>
+#include <vector>
+#include <fcppt/config/external_end.hpp>
 
 namespace fslp
 {

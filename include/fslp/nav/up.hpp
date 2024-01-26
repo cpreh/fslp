@@ -8,6 +8,7 @@
 #include <fcppt/unique_ptr.hpp>
 #include <fcppt/optional/make.hpp>
 #include <fcppt/optional/maybe.hpp>
+#include <fcppt/optional/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <utility>
 #include <fcppt/config/external_end.hpp>

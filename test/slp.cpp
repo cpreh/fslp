@@ -16,17 +16,18 @@
 #include <fcppt/tuple/object.hpp>
 #include <fcppt/config/external_begin.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <cstdint>
 #include <type_traits>
 #include <vector>
 #include <fcppt/config/external_end.hpp>
 
 namespace
 {
-enum class N1
+enum class N1 : std::uint8_t
 {
   A
 };
-enum class N2
+enum class N2 : std::uint8_t
 {
   A
 };

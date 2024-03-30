@@ -18,8 +18,12 @@ class fix
 public:
   using rec = typename fslp::detail::make_fix<Cs...>::type;
 
-  template<typename U, typename = std::enable_if_t<std::is_same_v<std::remove_cvref_t<U>,rec>>>
-  explicit fix(U &&_val) : v{std::forward<U>(_val)} {}
+  template <typename U>
+  explicit fix(U &&_val)
+    requires(std::is_same_v<std::remove_cvref_t<U>, rec>)
+      : v{std::forward<U>(_val)}
+  {
+  }
 
   [[nodiscard]] rec const &unfix() const { return v.get(); }
 private:

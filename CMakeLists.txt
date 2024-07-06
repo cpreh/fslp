@@ -23,7 +23,7 @@ fcppt_utils_add_source_groups("${FSLP_FILES}")
 fcppt_utils_add_dummy_target(fslp "${FSLP_FILES}")
 fcppt_utils_set_target_compiler_flags(fslp_dummy)
 target_include_directories(fslp_dummy PRIVATE include)
-target_link_libraries(fslp_dummy PRIVATE fcppt_core_interface)
+target_link_libraries(fslp_dummy PRIVATE fcppt_core_interface fcppt_catch_interface)
 set_target_properties(fslp_dummy PROPERTIES FOLDER fslp)
 
 option(ENABLE_TEST "Build the tests" ON)

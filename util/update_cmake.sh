@@ -2,7 +2,6 @@
 
 set -e -u
 
-update_cmake \
-	"CMakeLists.txt" \
-	FSLP_FILES \
+update_cmake.sh \
+	files.txt \
 	include

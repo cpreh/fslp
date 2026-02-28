@@ -11,7 +11,7 @@ template<template<typename...> class... Cs>
 struct slp
 {
   template<typename... Ns>
-  using type = typename fslp::detail::make_slp<fcppt::mpl::list::object<Ns...>,Cs...>::type;
+  using type = fslp::detail::make_slp<fcppt::mpl::list::object<Ns...>,Cs...>::type;
 };
 
 }

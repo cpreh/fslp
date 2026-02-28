@@ -7,7 +7,7 @@ namespace fslp
 {
 
 template <typename Ch, typename R, typename Rx>
-using forest_alg_t = typename fslp::forest_alg<Ch>:: template type<R,Rx>;
+using forest_alg_t = fslp::forest_alg<Ch>:: template type<R,Rx>;
 
 }
 

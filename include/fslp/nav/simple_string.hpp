@@ -19,7 +19,7 @@ template <typename Ch>
 class simple_string : public fslp::nav::string<Ch>
 {
 public:
-  using pos_type = typename std::vector<Ch>::size_type;
+  using pos_type = std::vector<Ch>::size_type;
 
   FCPPT_NONMOVABLE(simple_string);
 
@@ -29,6 +29,7 @@ public:
 
   ~simple_string() override = default;
 
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
   [[nodiscard]] Ch cur() const override { return this->impl_[this->pos_]; }
 
   [[nodiscard]] fcppt::optional::object<fcppt::unique_ptr<fslp::nav::string<Ch>>> next() const override

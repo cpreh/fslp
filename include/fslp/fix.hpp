@@ -16,7 +16,7 @@ template <template <typename...> class... Cs>
 class fix
 {
 public:
-  using rec = typename fslp::detail::make_fix<Cs...>::type;
+  using rec = fslp::detail::make_fix<Cs...>::type;
 
   template <typename U>
   explicit fix(U &&_val)

@@ -25,7 +25,7 @@ struct map_result
 };
 
 template<typename F, typename T>
-using map_result_t = typename fslp::detail::map_result<F,T>::type;
+using map_result_t = fslp::detail::map_result<F,T>::type;
 
 template<typename F, typename T>
 struct map_result<F, fslp::base<T>>

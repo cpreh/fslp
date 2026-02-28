@@ -23,7 +23,7 @@ struct make_fix
   };
 
   template <typename L>
-  using apply_fix = typename apply_fix_impl<L>::type;
+  using apply_fix = apply_fix_impl<L>::type;
 
   using constructors = fcppt::mpl::list::object<fcppt::mpl::lambda<C1>, fcppt::mpl::lambda<Cs>...>;
   using arguments = fcppt::mpl::list::map<fslp::detail::rotations<constructors>, fcppt::mpl::lambda<apply_fix>>;

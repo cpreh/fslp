@@ -7,7 +7,7 @@ namespace fslp
 {
 
 template <typename Ch, typename R>
-using string_alg_t = typename fslp::string_alg<Ch>:: template type<R>;
+using string_alg_t = fslp::string_alg<Ch>:: template type<R>;
 
 }
 

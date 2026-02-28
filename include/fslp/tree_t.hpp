@@ -7,7 +7,7 @@ namespace fslp
 {
 
 template <typename Ch, typename T, typename F>
-using tree_t = typename fslp::tree<Ch>:: template type<T,F>;
+using tree_t = fslp::tree<Ch>:: template type<T,F>;
 
 }
 

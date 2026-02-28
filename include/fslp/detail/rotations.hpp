@@ -29,7 +29,7 @@ struct rotations_impl
 };
 
 template<typename List>
-using rotations = typename fslp::detail::rotations_impl<List>::type;
+using rotations = fslp::detail::rotations_impl<List>::type;
 
 }
 
